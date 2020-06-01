@@ -47,6 +47,9 @@ public class PlayerMiningCompleteSystem : IEcsRunSystem
 
 			playerEnt.Set<StopMiningComponent>();
 
+			ref var moving = ref playerEnt.Set<MovingCommandComponent>();
+			moving.TargetPosition = wall.Position;
+
 		}
 	}
 }
