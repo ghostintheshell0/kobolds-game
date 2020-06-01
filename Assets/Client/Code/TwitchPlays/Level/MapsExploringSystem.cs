@@ -15,7 +15,7 @@ public class MapsExploringSystem : IEcsRunSystem
 			var exploredEnt = filter.GetEntity(i);
 			foreach (var k in maps)
 			{
-				ref var map = ref maps.Get1(i);
+				ref var map = ref maps.Get1(k);
 				if (map.Explored[explored.Position.x, explored.Position.y] == explored.Value) continue;
 
 				map.Explored[explored.Position.x, explored.Position.y] = explored.Value;
