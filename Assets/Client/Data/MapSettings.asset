@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43e6389266f3bb24ebe68de94c8ae126, type: 3}
+  m_Name: MapSettings
+  m_EditorClassIdentifier: 
+  visualSettings: {fileID: 11400000, guid: a34c5f5341dd6b641b24eb8c1a77e383, type: 2}
+  walls: {fileID: 11400000, guid: 5a995637e4dbbf44783c41519ff161a3, type: 2}
+  mapSize: {x: 11, y: 11}
+  totalSpawners: 12
+  exitBorderOffset: 1
