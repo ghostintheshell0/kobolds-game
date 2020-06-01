@@ -23,7 +23,7 @@ public class PlayerMiningSystem : IEcsRunSystem
 			if(playerEnt.Has<MiningComponent>())
 			{
 				ref var mining = ref playerEnt.Set<MiningComponent>();
-				var isNewTarget = command.Target.GetInternalId() != mining.Target.GetInternalId();
+				var isNewTarget = command.Target != mining.Target;
 
 				Debug.Log("already mining");
 				if(isNewTarget)
