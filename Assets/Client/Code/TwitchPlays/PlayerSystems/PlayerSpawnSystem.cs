@@ -16,16 +16,18 @@ public class PlayerSpawnSystem : IEcsRunSystem
 		foreach(var i in filter)
 		{
 			var count = spawners.GetEntitiesCount();
-			if (count <= 0)
+			if (count > 0)
+			{
+				ref var spawnComponent = ref filter.Get1(i);
+				ref var spawner = ref GetSpawner();
+				SpawnPlayer(spawnComponent, spawner);
+				ClearSpawner(spawner);
+			}
+			else
 			{
 				Debug.Log("No have spawn points");
-				continue;
 			}
 
-			ref var spawnComponent = ref filter.Get1(i);
-			ref var spawner = ref GetSpawner();
-			SpawnPlayer(spawnComponent, spawner);
-			ClearSpawner(spawner);
 			filter.GetEntity(i).Destroy();
 		}
 	}
