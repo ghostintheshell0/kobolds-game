@@ -6,6 +6,7 @@ public class StartGameSystem : IEcsRunSystem
 	private readonly EcsWorld world = default;
 	private readonly GameData gameData = default;
 	private readonly LevelData levelData = default;
+	private readonly RuntimeData runtimeData = default;
 
 	private readonly EcsFilter<StartGameComponent> filter = default;
 
@@ -16,6 +17,7 @@ public class StartGameSystem : IEcsRunSystem
 			CreateLevel();
 			CreateTimer();
 			SpawnSavedPlayers();
+			runtimeData.IsDoom = false;
 			filter.GetEntity(i).Destroy();
 		}
 	}

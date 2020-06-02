@@ -6,6 +6,7 @@ public class RuntimeData
 {
 	private List<PlayerStats> savedPlayersData = new List<PlayerStats>();
 	private List<EcsEntity> players = new List<EcsEntity>();
+	public bool IsDoom = false;
 
 	public void AddPlayer(EcsEntity playerEntity)
 	{
