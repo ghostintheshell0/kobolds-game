@@ -79,12 +79,13 @@ public class PlayerSpawnSystem : IEcsRunSystem
 
 	private void ClearSpawner(in SpawnerComponent spawner)
 	{
-		var e = world.NewEntity();
-		ref var explored = ref e.Set<ExploreComponent>();
+		var exploeEnt = world.NewEntity();
+		ref var explored = ref exploeEnt.Set<ExploreComponent>();
 		explored.Position = spawner.MapPosition;
 		explored.Value = true;
 
-		ref var wallDestroying = ref e.Set<WallDestroyingComponent>();
+		var wallDestroyingEnt = world.NewEntity();
+		ref var wallDestroying = ref wallDestroyingEnt.Set<WallDestroyingComponent>();
 		wallDestroying.Position = spawner.MapPosition;
 	}
 
