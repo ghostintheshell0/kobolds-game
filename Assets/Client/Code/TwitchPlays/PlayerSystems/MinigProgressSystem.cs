@@ -11,12 +11,6 @@ public class MinigProgressSystem : IEcsRunSystem
 		{
 			ref var hud = ref filter.Get1(i);
 
-			if(!hud.Target.IsAlive())
-			{
-				filter.GetEntity(i).Destroy();
-				continue;
-			}
-
 			var isMining = hud.Target.Has<MiningComponent>();
 			hud.View.Progress.gameObject.SetActive(isMining);
 			if(!isMining)
