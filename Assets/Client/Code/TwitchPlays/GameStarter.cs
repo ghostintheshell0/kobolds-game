@@ -188,12 +188,14 @@ public class LevelSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new MapsExploringSystem())
 			.Add(new DebugLogErrorsSystem())
 			.Add(new ChangeDebugUIState())
+			.Add(new ExitExploringSystem())
 
 			.Inject(gameData)
 			.Inject(levelData)
 			.Inject(runtimeData)
 
 			.OneFrame<MessageComponent>()
+			.OneFrame<ExploreComponent>()
 		.Init();
 	}
 
