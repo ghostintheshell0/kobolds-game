@@ -147,6 +147,7 @@ public class PlayerSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new SkinColorChangingSystem())
 			.Add(new PlayerRemovingSystem())
 			.Add(new EnableNavmeshAgentDelaySystem())
+			.Add(new PlayerHudRemovingSystem())
 
 			.Inject(gameData)
 			.Inject(levelData)
