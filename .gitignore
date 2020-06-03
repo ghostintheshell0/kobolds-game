@@ -8,6 +8,8 @@
 /[Ll]ogs/
 sysinfo.txt
 *.stackdump
+secret.*
+*.secret
  
 # ============================================= #
 # Visual Studio / MonoDevelop / Rider generated #

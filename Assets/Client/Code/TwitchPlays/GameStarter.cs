@@ -25,6 +25,10 @@ public class GameStarter : MonoBehaviour
 
 	private void CreateSystems()
 	{
+#if UNITY_EDITOR
+		Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create(world);
+		Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(systems);
+#endif
 		systems
 
 			.Add(new TwitchIntegrationsSystems())
@@ -68,6 +72,7 @@ public class TwitchIntegrationsSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new SendErrorsToTwitchSystem())
 			.Add(new TwitchMessagesReceivingSystem())
 			.Add(new HideTwitchConnectionUI())
+			.Add(new LoadTwitchInfoSystem())
 
 			.OneFrame<ErrorComponent>()
 			.Inject(levelData)

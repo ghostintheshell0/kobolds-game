@@ -20,7 +20,7 @@ public class TwitchConnectionUI : MonoBehaviour
 		var connectEnt = World.NewEntity();
 		ref var secret = ref connectEnt.Set<TwitchSecretComponent>();
 		secret.Oauth = tokenField.text;
-		secret.Name = userName;
+		secret.Channel = userName;
 
 		tokenField.text = string.Empty;
 		channelField.text = string.Empty;

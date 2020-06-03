@@ -2,11 +2,14 @@
 using TwitchLib.Unity;
 using TwitchLib.Client.Models;
 using TwitchLib.Client.Events;
+using UnityEngine;
+using System.IO;
 
 public class TwitchConnectSystem : IEcsRunSystem
 {
 
 	private readonly EcsFilter<TwitchSecretComponent> filter = default;
+	private readonly GameData gameData = default;
 	private readonly EcsWorld world = default;
 
 	private Client client;
@@ -17,7 +20,7 @@ public class TwitchConnectSystem : IEcsRunSystem
 		{
 			ref var secret = ref filter.Get1(i);
 
-			var cred = new ConnectionCredentials(twitchUsername: secret.Name, twitchOAuth: secret.Oauth);
+			var cred = new ConnectionCredentials(twitchUsername: secret.Channel, twitchOAuth: secret.Oauth);
 			if (client == null)
 			{
 				client = new Client();
@@ -29,7 +32,11 @@ public class TwitchConnectSystem : IEcsRunSystem
 				client.Connect();
 			}
 
+			var joinChannelEnt = world.NewEntity();
+			ref var joinChannel = ref joinChannelEnt.Set<TwitchChannelJoinComponent>();
+			joinChannel.ChannelName = secret.Channel;
 			filter.GetEntity(i).Unset<TwitchSecretComponent>();
+			SaveSecret(secret);
 		}
 	}
 
@@ -52,13 +59,20 @@ public class TwitchConnectSystem : IEcsRunSystem
 
 	private void OnConnected(object sender, OnConnectedArgs args)
 	{
-		var ent = world.NewEntity();
-		ref var connection = ref ent.Set<TwitchConnectionComponent>();
+		var connectionEnt = world.NewEntity();
+		ref var connection = ref connectionEnt.Set<TwitchConnectionComponent>();
 		connection.Client = client;
 
+		var startEnt = world.NewEntity();
+		ref var start = ref startEnt.Set<StartGameComponent>();
 
-		var e = world.NewEntity();
-		ref var start = ref e.Set<StartGameComponent>();
+
 	}
-
+	
+	private void SaveSecret(TwitchSecretComponent secret)
+	{
+		var path = Path.Combine(Application.dataPath, gameData.SecretFileName);
+		var content = new string[] { secret.Oauth, secret.Channel};
+		File.WriteAllLines(path, content);
+	}
 }

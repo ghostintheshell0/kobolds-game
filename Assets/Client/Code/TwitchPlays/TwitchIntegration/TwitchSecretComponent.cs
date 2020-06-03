@@ -1,5 +1,5 @@
 ﻿public struct TwitchSecretComponent
 {
 	public string Oauth;
-	public string Name;
+	public string Channel;
 }

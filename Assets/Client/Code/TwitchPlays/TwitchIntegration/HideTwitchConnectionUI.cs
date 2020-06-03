@@ -14,7 +14,3 @@ public class HideTwitchConnectionUI  : IEcsRunSystem
 		}
 	}
 }
-
-public struct HideTwitchConnectionUIComponent
-{
-}
