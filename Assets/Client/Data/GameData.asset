@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56d58586b66ede43a8d0137a0e1c45b, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  SecretFileName: secret
   TwitchCommands: {fileID: 11400000, guid: 80b5d6319168f0146a62d327d8b2d644, type: 2}
   VisualData: {fileID: 11400000, guid: 8bd10f1f4e57eb0428d9448977c2f1d7, type: 2}
   PlayersData: {fileID: 11400000, guid: c138885e225295847a359fa3ec8473ab, type: 2}
@@ -20,3 +19,5 @@ MonoBehaviour:
   RoundDuration: 300
   AfterFirstLeaverRoundDuration: 35
   TimerFormat: mm\:ss
+  SecretFileName: .secret
+  UserName: userName

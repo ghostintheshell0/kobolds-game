@@ -20,7 +20,7 @@ public class TwitchConnectSystem : IEcsRunSystem
 		{
 			ref var secret = ref filter.Get1(i);
 
-			var cred = new ConnectionCredentials(twitchUsername: secret.Channel, twitchOAuth: secret.Oauth);
+			var cred = new ConnectionCredentials(twitchUsername: secret.UserName, twitchOAuth: secret.Oauth);
 			if (client == null)
 			{
 				client = new Client();
@@ -35,8 +35,8 @@ public class TwitchConnectSystem : IEcsRunSystem
 			var joinChannelEnt = world.NewEntity();
 			ref var joinChannel = ref joinChannelEnt.Set<TwitchChannelJoinComponent>();
 			joinChannel.ChannelName = secret.Channel;
-			filter.GetEntity(i).Unset<TwitchSecretComponent>();
 			SaveSecret(secret);
+			filter.GetEntity(i).Unset<TwitchSecretComponent>();
 		}
 	}
 
@@ -72,7 +72,7 @@ public class TwitchConnectSystem : IEcsRunSystem
 	private void SaveSecret(TwitchSecretComponent secret)
 	{
 		var path = Path.Combine(Application.dataPath, gameData.SecretFileName);
-		var content = new string[] { secret.Oauth, secret.Channel};
+		var content = new string[] { secret.Oauth, secret.UserName, secret.Channel};
 		File.WriteAllLines(path, content);
 	}
 }

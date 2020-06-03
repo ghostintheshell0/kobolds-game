@@ -12,15 +12,11 @@ public class TwitchConnectionUI : MonoBehaviour
 
 	public void Join()
 	{
-		var e = World.NewEntity();
-		ref var join = ref e.Set<TwitchChannelJoinComponent>();
-
-		join.ChannelName = channelField.text;
-
 		var connectEnt = World.NewEntity();
 		ref var secret = ref connectEnt.Set<TwitchSecretComponent>();
 		secret.Oauth = tokenField.text;
-		secret.Channel = userName;
+		secret.UserName = userName;
+		secret.Channel = channelField.text;
 
 		tokenField.text = string.Empty;
 		channelField.text = string.Empty;

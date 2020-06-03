@@ -8,19 +8,22 @@ public class TwitchJoinSystem : IEcsRunSystem
 
 	public void Run()
 	{
+		if (connections.IsEmpty()) return;
+
 		foreach (var c in channels)
 		{
+			ref var cChannel = ref channels.Get1(c);
+
 			foreach (var e in connections)
 			{
 
 				ref var connection = ref connections.Get1(e);
-				ref var cChannel = ref channels.Get1(c);
 				connection.Client.JoinChannel(cChannel.ChannelName);
 				connection.Channel = cChannel.ChannelName;
 				
-				channels.GetEntity(c).Unset<TwitchChannelJoinComponent>();
 			}
 
+			channels.GetEntity(c).Unset<TwitchChannelJoinComponent>();
 		}
 
 	}

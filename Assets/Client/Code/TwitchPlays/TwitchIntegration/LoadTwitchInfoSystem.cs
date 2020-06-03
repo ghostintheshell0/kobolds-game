@@ -10,16 +10,16 @@ public class LoadTwitchInfoSystem : IEcsInitSystem
 	public void Init()
 	{
 		var path = Path.Combine(Application.dataPath, gameData.SecretFileName);
-		if(!File.Exists(path))
-		{
-			return;
-		}
+		if(!File.Exists(path)) return;
+
 		var secrets = File.ReadAllLines(path);
+		if(secrets.Length < 3) return;
 
 		var secretEnt = world.NewEntity();
 		ref var secret = ref secretEnt.Set<TwitchSecretComponent>();
 		secret.Oauth = secrets[0];
- 		secret.Channel = secrets[1];
+		secret.UserName = secrets[1];
+ 		secret.Channel = secrets[2];
 
 		var hideConnectHudEnt = world.NewEntity();
 		ref var hideConnectHud = ref hideConnectHudEnt.Set<HideTwitchConnectionUIComponent>();
