@@ -65,9 +65,13 @@ public class TwitchIntegrationsSystems : IEcsRunSystem, IEcsInitSystem
 	public void Init()
 	{
 		systems = new EcsSystems(world);
+		
+		if(!gameData.IsDebug)
+		{
+			systems.Add(new TwitchConnectSystem());
+		}
 
 		systems
-			.Add(new TwitchConnectSystem())
 			.Add(new TwitchJoinSystem())
 			.Add(new SendErrorsToTwitchSystem())
 			.Add(new TwitchMessagesReceivingSystem())
