@@ -15,8 +15,9 @@ public class PlayerMovingCompleteSystem : IEcsRunSystem
 			var worldPos = map.MapToWorld(moving.Target);
 			if (player.View.transform.IsNear(worldPos, moving.StoppingDistance))
 			{
-				var e = filter.GetEntity(i);
-				e.Unset<MovingComponent>();
+				var playerEnt = filter.GetEntity(i);
+				playerEnt.Unset<MovingComponent>();
+				playerEnt.Set<TasksCompletedComponent>();
 
 				player.View.Animator.SetFloat(AnimationNames.Speed, 0f);
 				continue;

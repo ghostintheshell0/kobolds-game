@@ -12,9 +12,10 @@ public class PlayerTargetSystem : IEcsRunSystem
 			ref var map = ref player.MapEntity.Set<MapComponent>();
 			ref var targetComponent = ref filter.Get2(i);
 			var target = targetComponent.Direction + player.Position;
+			var playerEnt = filter.GetEntity(i);
+
 			if (!map.IsOut(target))
 			{
-				var playerEnt = filter.GetEntity(i);
 				if (map.Walls[target.x, target.y].IsAlive())
 				{
 					ref var mining = ref playerEnt.Set<MiningCommandComponent>();
@@ -25,6 +26,10 @@ public class PlayerTargetSystem : IEcsRunSystem
 					ref var moving = ref playerEnt.Set<MovingCommandComponent>();
 					moving.TargetPosition = target;
 				}
+			}
+			else
+			{
+				playerEnt.Set<TasksBreakComponent>();
 			}
 
 			filter.GetEntity(i).Unset<TargetComponent>();

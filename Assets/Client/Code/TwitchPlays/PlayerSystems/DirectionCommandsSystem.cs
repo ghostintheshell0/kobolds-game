@@ -1,8 +1,10 @@
 ﻿using Leopotam.Ecs;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DirectionCommandsSystem : IEcsRunSystem
 {
+
 	private readonly EcsFilter<MessageComponent> filter = default;
 	private readonly RuntimeData runtimeData = default;
 	private readonly TwitchCommands commands = default;
@@ -21,8 +23,23 @@ public class DirectionCommandsSystem : IEcsRunSystem
 					var dir = CommandToDirection(mess.FirstWord);
 
 					var playerEnt = runtimeData.GetPlayer(mess.Sender);
-					ref var target = ref playerEnt.Set<TargetComponent>();
-					target.Direction = dir;
+					//		ref var target = ref playerEnt.Set<TargetComponent>();
+					//		target.Direction = dir;
+					playerEnt.Set<TasksCompletedComponent>();
+					ref var tasks = ref playerEnt.Set<PlayerTasksComponent>();
+					if(tasks.List == null)
+					{
+						tasks.List = new List<Vector2Int>();
+					}
+					tasks.List.Clear();
+					tasks.List.Add(dir);
+					tasks.CurrentTask = 0;
+
+					if(mess.Args.Length > 0)
+					{
+						var words = mess.Args.Split(' ');
+						ParseDirections(words, tasks.List);
+					}
 				}
 
 				if(runtimeData.IsSavedPlayer(mess.Sender))
@@ -62,4 +79,16 @@ public class DirectionCommandsSystem : IEcsRunSystem
 
 		return Vector2Int.left;
 	}
+
+	private void ParseDirections(string[] args, List<Vector2Int> directions)
+	{
+		for (int k = 0; k < args.Length; ++k)
+		{
+			if(!IsDirectionCommand(args[k])) break;
+
+			var taskDir = CommandToDirection(args[k]);
+			directions.Add(taskDir);
+		}
+	}
+
 }

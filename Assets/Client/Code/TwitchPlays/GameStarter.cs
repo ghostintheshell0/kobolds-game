@@ -107,6 +107,8 @@ public class CommandsSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new HeadSizeCommandSystem())
 			.Add(new ExitCommandSystem())
 			.Add(new UpgradeSystem())
+			.Add(new TasksBreakSystem())
+			.Add(new TaskCompleteSystems())
 
 			.Inject(gameData.TwitchCommands)
 			.Inject(runtimeData)
