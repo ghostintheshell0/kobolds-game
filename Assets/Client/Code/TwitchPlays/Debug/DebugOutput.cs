@@ -11,7 +11,6 @@ public class DebugOutput : MonoBehaviour
 	private void Start()
 	{
 		messages = new List<MessageView>(size);
-		gameObject.SetActive(false);
 	}
 
 	public void Log(string text)
