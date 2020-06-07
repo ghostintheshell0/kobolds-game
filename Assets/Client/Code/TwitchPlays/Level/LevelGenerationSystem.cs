@@ -54,6 +54,12 @@ public class LevelGenerationSystem : IEcsRunSystem
 				wall.Ore = Random.Range(randomWallTemplate.MinOre, randomWallTemplate.MaxOre);
 				wall.View = ObjectPool.Spawn(randomWallTemplate.Prefab);
 				wall.View.transform.position = map.MapToWorld(pos);
+
+				wall.View.Left.SetActive(false);
+				wall.View.Right.SetActive(false);
+				wall.View.Forward.SetActive(false);
+				wall.View.Backward.SetActive(false);
+
 				map.Explored[ix, iy] = false;
 				map.Walls[ix, iy] = e;
 			}

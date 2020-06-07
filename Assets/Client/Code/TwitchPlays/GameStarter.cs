@@ -195,11 +195,12 @@ public class LevelSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new LevelTimerSystem())
 			.Add(new EndGameTimerUpdaterSystem())
 			.Add(new CameraControllerSystem())
-			.Add(new WallDestroyingSystem())
 			.Add(new MapsExploringSystem())
 			.Add(new DebugLogErrorsSystem())
 			.Add(new ChangeDebugUIState())
 			.Add(new ExitExploringSystem())
+			.Add(new WallsExploringSystem())
+			.Add(new WallDestroyingSystem())
 
 			.Inject(gameData)
 			.Inject(levelData)
