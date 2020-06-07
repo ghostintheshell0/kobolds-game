@@ -22,6 +22,6 @@ MonoBehaviour:
   MovingSpeed: 2
   StoppingDistance: 0.2
   PickaxeAnimationVariants: 3
-  DamageMultipler: 55
+  DamageMultipler: 5
   LevelCostMultipler: 4
   EnableAgentFramesDelay: 10
