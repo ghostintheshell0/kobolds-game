@@ -20,4 +20,4 @@ MonoBehaviour:
   AfterFirstLeaverRoundDuration: 35
   TimerFormat: mm\:ss
   SecretFileName: .secret
-  UserName: userName
+  IsDebug: 1

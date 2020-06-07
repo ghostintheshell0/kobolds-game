@@ -10,42 +10,44 @@ public class LevelGenerationSystem : IEcsRunSystem
 	{
 		foreach(var i in filter)
 		{
-			ref var settings = ref filter.Get1(i);
-			Generate(settings);
+			ref var generation = ref filter.Get1(i);
+			Generate(generation.Settings);
 			filter.GetEntity(i).Destroy();
 		}
 	}
 
-	private void Generate(in LevelGenerationComponent settings)
+	private void Generate(GenerationSettings settings)
 	{
 		var mapEnt = world.NewEntity();
 		ref var map = ref mapEnt.Set<MapComponent>();
+		map.Entity = mapEnt;
 
 		SetMapValues(ref map, settings);
-		GenerateWalls(ref map, settings);
+		GenerateWalls(ref map, settings.Walls);
 		GenerateExit(ref map, settings);
-		GenerateSpawners(mapEnt, settings);
+		GenerateSpawners(ref map, settings);
 	}
 
-	private void SetMapValues(ref MapComponent map, in LevelGenerationComponent settings)
+	private void SetMapValues(ref MapComponent map, GenerationSettings settings)
 	{
-		map.Explored = new bool[settings.Size.x, settings.Size.y];
-		map.Walls = new EcsEntity[settings.Size.x, settings.Size.y];
-		map.CellSize = settings.CellSize;
-		map.MapSize = settings.Size;
-		map.Position = settings.StartPoint;
+		var size = settings.MapSize;
+		map.Explored = new bool[size.x, size.y];
+		map.Walls = new EcsEntity[size.x, size.y];
+		map.Size = size;
+		map.CellSize = settings.VisualSettings.CellSize;
+		map.Position = settings.VisualSettings.StartPoint;
 	}
 
-	private void GenerateWalls(ref MapComponent map, in LevelGenerationComponent settings)
+	private void GenerateWalls(ref MapComponent map, RandomWallList walls)
 	{
-		for (int ix = 0; ix < settings.Size.x; ++ix)
+		for (int ix = 0; ix < map.Size.x; ++ix)
 		{
-			for (int iy = 0; iy < settings.Size.y; ++iy)
+			for (int iy = 0; iy < map.Size.y; ++iy)
 			{
 				var e = world.NewEntity();
 				ref var wall = ref e.Set<WallComponent>();
 				var pos = new Vector2Int(ix, iy);
-				var randomWallTemplate = settings.Walls.GetRandomItem();
+				var randomWallTemplate = walls.GetRandomItem();
 
 				wall.Position = pos;
 				wall.Heals = Random.Range(randomWallTemplate.MinHp, randomWallTemplate.MaxHp);
@@ -58,41 +60,43 @@ public class LevelGenerationSystem : IEcsRunSystem
 		}
 	}
 
-	private void GenerateExit(ref MapComponent map, in LevelGenerationComponent settings)
+	private void GenerateExit(ref MapComponent map, GenerationSettings settings)
 	{
-		var x = Random.Range(settings.ExitBorederOffset, settings.Size.x - settings.ExitBorederOffset);
-		var y = Random.Range(settings.ExitBorederOffset, settings.Size.y - settings.ExitBorederOffset);
+		var x = Random.Range(settings.ExitBorderOffset, map.Size.x - settings.ExitBorderOffset);
+		var y = Random.Range(settings.ExitBorderOffset, map.Size.y - settings.ExitBorderOffset);
 		var pos = new Vector2Int(x, y);
 		
 
 		var e = world.NewEntity();
 		ref var exit = ref e.Set<ExitComponent>();
 		exit.Position = pos;
-		exit.View = ObjectPool.Spawn(settings.ExitTemlate);
+		exit.View = ObjectPool.Spawn(settings.VisualSettings.ExitTemplate);
 		exit.View.transform.position = map.MapToWorld(pos);
 		exit.View.gameObject.SetActive(false);
 		map.Exit = e;
 		Debug.Log($"exit in {exit.Position}");
 	}
 
-	private void GenerateSpawners(EcsEntity mapEnt, LevelGenerationComponent settings)
+	private void GenerateSpawners(ref MapComponent map, GenerationSettings settings)
 	{
 		var p1 = new Vector2Int(0, 0);
-		var p2 = new Vector2Int(0, settings.Size.y);
+		var p2 = new Vector2Int(0, map.Size.y);
 
-		var p3 = new Vector2Int(0, settings.Size.y - 1);
-		var p4 = new Vector2Int(settings.Size.x, settings.Size.y - 1);
+		var p3 = new Vector2Int(0, map.Size.y - 1);
+		var p4 = new Vector2Int(map.Size.x, map.Size.y - 1);
 
-		var p5 = new Vector2Int(settings.Size.x - 1, settings.Size.y - 1);
-		var p6 = new Vector2Int(settings.Size.x - 1, 0);
+		var p5 = new Vector2Int(map.Size.x - 1, map.Size.y - 1);
+		var p6 = new Vector2Int(map.Size.x - 1, 0);
 
-		CreateSpawnLine(p1, p2, settings.Spawners / 4, mapEnt);
-		CreateSpawnLine(p3, p4, settings.Spawners / 4, mapEnt);
-		CreateSpawnLine(p5, p6, settings.Spawners / 4, mapEnt);
-		CreateSpawnLine(p6, p1, settings.Spawners / 4, mapEnt);
+		var spawnersPerLine = settings.Spawners / 4;
+
+		CreateSpawnLine(p1, p2, spawnersPerLine, ref map);
+		CreateSpawnLine(p3, p4, spawnersPerLine, ref map);
+		CreateSpawnLine(p5, p6, spawnersPerLine, ref map);
+		CreateSpawnLine(p6, p1, spawnersPerLine, ref map);
 	}
 
-	private void CreateSpawnLine(Vector2Int from, Vector2Int to, int count, EcsEntity mapEnt)
+	private void CreateSpawnLine(Vector2Int from, Vector2Int to, int count, ref MapComponent map)
 	{
 		if (count <= 0)
 		{
@@ -109,7 +113,7 @@ public class LevelGenerationSystem : IEcsRunSystem
 			var e = world.NewEntity();
 			ref var spawner = ref e.Set<SpawnerComponent>();
 			spawner.MapPosition = from + step * i;
-			spawner.Map = mapEnt;
+			spawner.MapEnt = map.Entity;
 		}
 	}
 }

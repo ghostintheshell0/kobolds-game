@@ -4,6 +4,7 @@ using TwitchLib.Client.Models;
 using TwitchLib.Client.Events;
 using UnityEngine;
 using System.IO;
+using System.Threading.Tasks;
 
 public class TwitchConnectSystem : IEcsRunSystem
 {
@@ -38,6 +39,7 @@ public class TwitchConnectSystem : IEcsRunSystem
 			SaveSecret(secret);
 			filter.GetEntity(i).Unset<TwitchSecretComponent>();
 		}
+		
 	}
 
 	private void OnJoinedChannel(object sender, OnJoinedChannelArgs e)
@@ -68,11 +70,11 @@ public class TwitchConnectSystem : IEcsRunSystem
 
 
 	}
-	
+
 	private void SaveSecret(TwitchSecretComponent secret)
 	{
 		var path = Path.Combine(Application.dataPath, gameData.SecretFileName);
-		var content = new string[] { secret.Oauth, secret.UserName, secret.Channel};
+		var content = new string[] { secret.Oauth, secret.UserName, secret.Channel };
 		File.WriteAllLines(path, content);
 	}
 }

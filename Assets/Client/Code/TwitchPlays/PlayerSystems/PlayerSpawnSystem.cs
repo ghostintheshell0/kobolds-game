@@ -43,11 +43,11 @@ public class PlayerSpawnSystem : IEcsRunSystem
 	{
 		var playerEnt = world.NewEntity();
 		ref var player = ref playerEnt.Set<PlayerComponent>();
-		ref var map = ref spawner.Map.Set<MapComponent>(); 
+		ref var map = ref spawner.MapEnt.Set<MapComponent>(); 
 		player.View = ObjectPool.Spawn(levelData.PlayerTemplate);
 		player.Position = spawner.MapPosition;
 		player.View.transform.position = map.MapToWorld(player.Position);
-		player.MapEntity = spawner.Map;
+		player.MapEntity = spawner.MapEnt;
 		player.Stats = spawnData.Stats;
 
 		ref var skinComponent = ref playerEnt.Set<SkinComponent>();

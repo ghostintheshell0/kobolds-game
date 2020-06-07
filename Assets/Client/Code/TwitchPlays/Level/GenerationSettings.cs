@@ -3,6 +3,7 @@
 [CreateAssetMenu(menuName = "Game/Generation Settings")]
 public class GenerationSettings : ScriptableObject
 {
+	
 	[SerializeField] private VisualGenerationSettings visualSettings = default;
 	[SerializeField] private RandomWallList walls = default;
 	[SerializeField] private Vector2Int mapSize = default;

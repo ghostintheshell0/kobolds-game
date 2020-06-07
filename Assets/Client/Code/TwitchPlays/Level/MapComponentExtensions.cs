@@ -4,7 +4,7 @@ public static class MapComponentExtensions
 { 
 	public static bool IsOut(this ref MapComponent map, Vector2Int pos)
 	{
-		return pos.x < 0 || pos.x >= map.MapSize.x || pos.y < 0 || pos.y >= map.MapSize.y;
+		return pos.x < 0 || pos.x >= map.Size.x || pos.y < 0 || pos.y >= map.Size.y;
 	}
 
 

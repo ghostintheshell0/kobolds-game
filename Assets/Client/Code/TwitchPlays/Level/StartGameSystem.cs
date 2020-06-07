@@ -1,5 +1,4 @@
 ﻿using Leopotam.Ecs;
-using UnityEngine;
 
 public class StartGameSystem : IEcsRunSystem
 {
@@ -25,14 +24,8 @@ public class StartGameSystem : IEcsRunSystem
 	private void CreateLevel()
 	{
 		var e = world.NewEntity();
-		ref var settings = ref e.Set<LevelGenerationComponent>();
-		settings.Size = gameData.GenerationSettings.MapSize;
-		settings.StartPoint = gameData.GenerationSettings.VisualSettings.StartPoint;
-		settings.CellSize = gameData.GenerationSettings.VisualSettings.CellSize;
-		settings.ExitTemlate = gameData.GenerationSettings.VisualSettings.ExitTemplate;
-		settings.ExitBorederOffset = gameData.GenerationSettings.ExitBorderOffset;
-		settings.Spawners = gameData.GenerationSettings.Spawners;
-		settings.Walls = gameData.GenerationSettings.Walls;
+		ref var generation = ref e.Set<LevelGenerationComponent>();
+		generation.Settings = gameData.GenerationSettings;
 	}
 
 	private void CreateTimer()
