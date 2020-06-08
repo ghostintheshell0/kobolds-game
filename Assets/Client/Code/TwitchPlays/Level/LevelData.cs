@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class LevelData : MonoBehaviour
 {
@@ -16,5 +17,6 @@ public class LevelData : MonoBehaviour
 	public Vector3 PlayerHUDOffset;
 	public TwitchConnectionUI TwitchConnectionUI;
 	public CameraSettings CameraSettings;
+	public EventSystem EventsSystem;
 	public KeyCode DebugInputButton;
 }

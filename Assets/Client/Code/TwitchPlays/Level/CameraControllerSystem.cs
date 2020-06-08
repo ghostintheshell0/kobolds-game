@@ -8,6 +8,7 @@ public class CameraControllerSystem : IEcsRunSystem
 
 	public void Run()
 	{
+		if (levelData.EventsSystem.IsPointerOverGameObject()) return;
 
 		var deltaZoom = Input.GetAxis("Mouse ScrollWheel") * levelData.CameraSettings.ZoomSpeed;
 
