@@ -42,17 +42,7 @@ public class WallsExploringSystem : IEcsRunSystem
 		if(wallEnt.IsAlive())
 		{
 			ref var wallComp = ref wallEnt.Set<WallComponent>();
-			var wallObj = GetWallObject(wallComp.View, holePos - wallPos);
-			wallObj.SetActive(true);
+			wallComp.EnablePlane(holePos - wallPos);
 		}
-		
-	}
-
-	private GameObject GetWallObject(MonoWall wall, Vector2Int direction)
-	{
-		if (direction.x < 0) return wall.Left;
-		if (direction.x > 0) return wall.Right;
-		if (direction.y < 0) return wall.Backward;
-		return wall.Forward;
 	}
 }

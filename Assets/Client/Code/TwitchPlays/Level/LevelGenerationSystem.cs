@@ -54,15 +54,34 @@ public class LevelGenerationSystem : IEcsRunSystem
 				wall.Ore = Random.Range(randomWallTemplate.MinOre, randomWallTemplate.MaxOre);
 				wall.View = ObjectPool.Spawn(randomWallTemplate.Prefab);
 				wall.View.transform.position = map.MapToWorld(pos);
-
-				wall.View.Left.SetActive(false);
-				wall.View.Right.SetActive(false);
-				wall.View.Forward.SetActive(false);
-				wall.View.Backward.SetActive(false);
-
+				wall.DisableAllPlanes();
 				map.Explored[ix, iy] = false;
 				map.Walls[ix, iy] = e;
 			}
+		}
+
+		EnableBorderWallPlanes(ref map);
+	}
+
+	private void EnableBorderWallPlanes(ref MapComponent map)
+	{
+		var lastX = map.Size.x - 1;
+		var lastY = map.Size.y - 1;
+
+		for (var x = 0; x < map.Size.x; ++x)
+		{
+			ref var wall = ref map.Walls[x, 0];
+			wall.Set<WallComponent>().EnablePlane(Vector2Int.down);
+			wall = ref map.Walls[x, lastY];
+			wall.Set<WallComponent>().EnablePlane(Vector2Int.up);
+		}
+
+		for (var y = 0; y < map.Size.y; ++y)
+		{
+			ref var wall = ref map.Walls[0, y];
+			wall.Set<WallComponent>().EnablePlane(Vector2Int.left);
+			wall = ref map.Walls[lastX, y];
+			wall.Set<WallComponent>().EnablePlane(Vector2Int.right);
 		}
 	}
 
