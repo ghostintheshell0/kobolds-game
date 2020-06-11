@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using UnityEngine;
 
 public class PlayerExitSystem : IEcsRunSystem
 {
@@ -11,20 +12,39 @@ public class PlayerExitSystem : IEcsRunSystem
 		foreach(var i in filter)
 		{
 			ref var player = ref filter.Get1(i);
-			ref var exit = ref player.MapEntity.Set<MapComponent>().Exit.Set<ExitComponent>();
-			if (exit.Position == player.Position)
+			var playerEnt = filter.GetEntity(i);
+			ref var map = ref player.MapEntity.Set<MapComponent>();
+			var objEnt = GetObjectInPos(ref map, player.Position);
+
+			if (objEnt.IsAlive() && objEnt.Has<ExitComponent>())
 			{
-				player.Stats.Escapes++;
-				var doomEnt = world.NewEntity();
-				ref var doom = ref doomEnt.Set<DoomComponent>();
+				ref var exit = ref objEnt.Set<ExitComponent>();
+				if (exit.Position == player.Position)
+				{
+					player.Stats.Escapes++;
+					var doomEnt = world.NewEntity();
+					ref var doom = ref doomEnt.Set<DoomComponent>();
 
-				var e = filter.GetEntity(i);
-				runtimeData.SavePlayer(e);
-				
-				e.Set<RemovingComponent>();
-				e.Unset<PlayerExitCommandComponent>();
+					runtimeData.SavePlayer(playerEnt);
 
+					playerEnt.Set<RemovingComponent>();
+
+				}
 			}
+
+			playerEnt.Unset<PlayerExitCommandComponent>();
 		}
+	}
+
+	private EcsEntity GetObjectInPos(ref MapComponent map, Vector2Int pos)
+	{
+		for(var i = 0; i < map.Objects.Count; ++i)
+		{
+			ref var mapObjComp = ref map.Objects[i].Set<MapObjectComponent>();
+			if (mapObjComp.Position == pos) return map.Objects[i];
+		}
+
+		return EcsEntity.Null;
+
 	}
 }

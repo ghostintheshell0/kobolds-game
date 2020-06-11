@@ -1,10 +1,20 @@
 ﻿using UnityEngine;
 using Leopotam.Ecs;
+using System.Collections.Generic;
 
-public class LevelGenerationSystem : IEcsRunSystem
+public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 {
 	private readonly EcsFilter<LevelGenerationComponent> filter = default;
 	private readonly EcsWorld world = default;
+	private Dictionary<MapObjectType, System.Action<EcsEntity>> mapObjectSpecialComponents;
+
+	public void Init()
+	{
+		mapObjectSpecialComponents = new Dictionary<MapObjectType, System.Action<EcsEntity>>()
+		{
+			{MapObjectType.Exit, AddExit },
+		};
+	}
 
 	public void Run()
 	{
@@ -24,7 +34,7 @@ public class LevelGenerationSystem : IEcsRunSystem
 
 		SetMapValues(ref map, settings);
 		GenerateWalls(ref map, settings.Walls);
-		GenerateExit(ref map, settings);
+		GenerateObjects(ref map, settings);
 		GenerateSpawners(ref map, settings);
 	}
 
@@ -34,8 +44,8 @@ public class LevelGenerationSystem : IEcsRunSystem
 		map.Explored = new bool[size.x, size.y];
 		map.Walls = new EcsEntity[size.x, size.y];
 		map.Size = size;
-		map.CellSize = settings.VisualSettings.CellSize;
-		map.Position = settings.VisualSettings.StartPoint;
+		map.CellSize = settings.CellSize;
+		map.Position = settings.StartPoint;
 	}
 
 	private void GenerateWalls(ref MapComponent map, RandomWallList walls)
@@ -85,21 +95,57 @@ public class LevelGenerationSystem : IEcsRunSystem
 		}
 	}
 
-	private void GenerateExit(ref MapComponent map, GenerationSettings settings)
+	private void GenerateObjects(ref MapComponent map, GenerationSettings settings)
 	{
-		var x = Random.Range(settings.ExitBorderOffset, map.Size.x - settings.ExitBorderOffset);
-		var y = Random.Range(settings.ExitBorderOffset, map.Size.y - settings.ExitBorderOffset);
+		for(var i = 0; i < settings.MapObjects.List.Count; ++i)
+		{
+			var objData = settings.MapObjects.List[i];
+			for(int k = 0; k < objData.Count; ++k)
+			{
+				var chance = Random.Range(0, 1f);
+				if (objData.Chance < chance) continue;
+				GenerateObject(ref map, objData);
+			}
+		}
+	}
+
+	private void GenerateObject(ref MapComponent map, MapObject objData)
+	{
+
+		var x = Random.Range(objData.BordersOffset, map.Size.x - objData.BordersOffset);
+		var y = Random.Range(objData.BordersOffset, map.Size.y - objData.BordersOffset);
 		var pos = new Vector2Int(x, y);
 		
+		var objEnt = world.NewEntity();
+		ref var mapObj = ref objEnt.Set<MapObjectComponent>();
+		mapObj.Position = pos;
+		mapObj.View = ObjectPool.Spawn(objData.Template);
+		mapObj.View.transform.position = map.MapToWorld(pos);
+		mapObj.View.gameObject.SetActive(objData.Visible);
+		mapObj.Visible = objData.Visible;
+		mapObj.CanBeUnderWall = objData.CanBeUnderWall;
+		mapObj.MapObjectType = objData.MapObjectType;
 
-		var e = world.NewEntity();
-		ref var exit = ref e.Set<ExitComponent>();
-		exit.Position = pos;
-		exit.View = ObjectPool.Spawn(settings.VisualSettings.ExitTemplate);
-		exit.View.transform.position = map.MapToWorld(pos);
-		exit.View.gameObject.SetActive(false);
-		map.Exit = e;
-		Debug.Log($"exit in {exit.Position}");
+		if (mapObj.Visible)
+		{
+			var destrEnt = world.NewEntity();
+			ref var wallDestr = ref destrEnt.Set<WallDestroyingComponent>();
+			wallDestr.Position = pos;
+			ref var explore = ref destrEnt.Set<ExploreComponent>();
+			explore.Position = pos;
+			explore.Value = true;
+		}
+
+		AddSpecialComponents(objEnt, ref mapObj);
+		Debug.Log($"{mapObj.View.name} in {mapObj.Position}");
+	}
+
+	private void AddSpecialComponents(EcsEntity objEnt, ref MapObjectComponent mapObj)
+	{
+		var type = mapObj.MapObjectType;
+
+		mapObjectSpecialComponents[type](objEnt);
+
 	}
 
 	private void GenerateSpawners(ref MapComponent map, GenerationSettings settings)
@@ -140,5 +186,10 @@ public class LevelGenerationSystem : IEcsRunSystem
 			spawner.MapPosition = from + step * i;
 			spawner.MapEnt = map.Entity;
 		}
+	}
+
+	private void AddExit(EcsEntity ent)
+	{
+		ent.Set<ExitComponent>();
 	}
 }
