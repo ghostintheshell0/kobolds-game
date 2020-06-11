@@ -17,5 +17,5 @@ MonoBehaviour:
   mapSize: {x: 11, y: 11}
   totalSpawners: 12
   exitBorderOffset: 1
-  startPoint: {x: 0, y: 0, z: 0}
-  cellSize: {x: 0, y: 0, z: 0}
+  startPoint: {x: -4.5, y: 0, z: -5}
+  cellSize: {x: 1, y: 1, z: 1}
