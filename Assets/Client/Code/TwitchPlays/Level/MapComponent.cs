@@ -9,7 +9,6 @@ public struct MapComponent
 	public Vector2Int Size;
 	public Vector3 CellSize;
 	public Vector3 Position;
-	//	public EcsEntity Exit;
 	public EcsEntity Entity;
 	public List<EcsEntity> Objects;
 }

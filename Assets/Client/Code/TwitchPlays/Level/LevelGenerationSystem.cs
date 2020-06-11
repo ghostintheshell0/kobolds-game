@@ -12,7 +12,8 @@ public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 	{
 		mapObjectSpecialComponents = new Dictionary<MapObjectType, System.Action<EcsEntity>>()
 		{
-			{MapObjectType.Exit, AddExit },
+			{MapObjectType.Exit, AddExitComponent },
+			{MapObjectType.Chest, AddChestComponent },
 		};
 	}
 
@@ -188,8 +189,13 @@ public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 		}
 	}
 
-	private void AddExit(EcsEntity ent)
+	private void AddExitComponent(EcsEntity ent)
 	{
 		ent.Set<ExitComponent>();
+	}
+
+	private void AddChestComponent(EcsEntity ent)
+	{
+
 	}
 }
