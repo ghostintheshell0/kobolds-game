@@ -67,11 +67,10 @@ public class PlayerSpawnSystem : IEcsRunSystem
 		playerHud.View = ObjectPool.Spawn(levelData.PlayerHUDTemplate);
 		playerHud.View.Canvas.worldCamera = levelData.Camera;
 		playerHud.Target = playerEnt;
-		playerHud.Offset = levelData.PlayerHUDOffset;
 		playerHud.View.PlayerNameField.text = player.Stats.Name;
 		playerHud.View.Progress.gameObject.SetActive(false);
 		playerHud.View.Canvas.transform.SetParent(player.View.transform);
-		playerHud.View.transform.localPosition = playerHud.Offset;
+		playerHud.View.transform.localPosition = playerHud.View.Offset;
 
 		runtimeData.AddPlayer(playerEnt);
 	}

@@ -8,6 +8,7 @@ public class MonoPlayerHUD : MonoBehaviour
 	[SerializeField] private Slider progressBar = default;
 	[SerializeField] private Image icon = default;
 	[SerializeField] private Canvas canvas = default;
+	public Vector3 Offset = default;
 
 	public TMP_Text PlayerNameField => playerName;
 	public Slider Progress => progressBar;
