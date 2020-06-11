@@ -15,20 +15,21 @@ public class DoomSystem : IEcsRunSystem
 		var timerEnt = world.NewEntity();
 		ref var timerUpdater = ref timerEnt.Set<TimerUpdaterComponent>();
 
-		if(runtimeData.PlayersCount == 0)
+		if (runtimeData.IsDoom)
 		{
-			timerUpdater.NewTime = 0;
+			if (runtimeData.PlayersCount == 0)
+			{
+				timerUpdater.NewTime = 0;
+			}
 		}
 		else
 		{
-			if (runtimeData.IsDoom) return;
+			runtimeData.IsDoom = true;
 			var messEnt = world.NewEntity();
 			ref var mess = ref messEnt.Set<ErrorComponent>();
 			timerUpdater.NewTime = gameData.AfterFirstLeaverRoundDuration;
 			mess.Message = $"The world will be destroyed in {gameData.AfterFirstLeaverRoundDuration} seconds";
 		}
-
-		runtimeData.IsDoom = true;
 
 		foreach (var i in filter)
 		{

@@ -33,7 +33,7 @@ public class EndGameSystem : IEcsRunSystem
 				}
 				else
 				{
-					message.Message += $"@{runtimeData.SavedPlayers[i].Name} ,";
+					message.Message += $"@{runtimeData.SavedPlayers[i].Name} , ";
 				}
 			}
 		}
