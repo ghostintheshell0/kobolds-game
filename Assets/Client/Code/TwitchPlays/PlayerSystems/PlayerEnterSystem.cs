@@ -30,16 +30,8 @@ public class PlayerEnterSystem : IEcsRunSystem
 			
 			var ent = world.NewEntity();
 			ref var spawn = ref ent.Set<PlayerSpawnComponent>();
-			var stats = new PlayerStats()
-			{
-				Name = mess.Sender,
-				Level = gameData.PlayersData.StartPlayerValues.Level,
-				Ore = gameData.PlayersData.StartPlayerValues.Ore,
-				Escapes = gameData.PlayersData.StartPlayerValues.Escapes,
-				HeadSize = gameData.PlayersData.StartPlayerValues.HeadSize,
-				SkinColor = gameData.PlayersData.StartPlayerValues.SkinColor,
-			};
 
+			var stats = runtimeData.IsSavedPlayer(mess.Sender) ? runtimeData.GetSavedPlayer(mess.Sender) : GetNewPlayerStats(mess.Sender);
 			spawn.Stats = stats;
 
 		}
@@ -50,5 +42,21 @@ public class PlayerEnterSystem : IEcsRunSystem
 		var ent = world.NewEntity();
 		ref var mess = ref ent.Set<ErrorComponent>();
 		mess.Message = text;
+	}
+
+	private PlayerStats GetNewPlayerStats(string playerName)
+	{
+		return new PlayerStats()
+			{
+				Name = playerName,
+				Level = gameData.PlayersData.StartPlayerValues.Level,
+				Ore = gameData.PlayersData.StartPlayerValues.Ore,
+				Escapes = gameData.PlayersData.StartPlayerValues.Escapes,
+				HeadSize = gameData.PlayersData.StartPlayerValues.HeadSize,
+				SkinColor = gameData.PlayersData.StartPlayerValues.SkinColor,
+				Deads = 0,
+				WallsDestroyed = 0,
+				WallsDestroyedInCurrentGame = 0
+			};
 	}
 }
