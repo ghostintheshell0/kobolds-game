@@ -68,3 +68,9 @@ MonoBehaviour:
   - '!upgrade'
   - '!upg'
   - "!\u0433\u0437\u043F"
+  Use:
+  - '!use'
+  - "!\u0433\u044B\u0443"
+  Hats:
+  - '!hat'
+  - '!hats'

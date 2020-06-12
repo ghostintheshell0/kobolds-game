@@ -510,10 +510,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cf586634c0c4c4ea0ad08004c0e365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightHand: {fileID: 5105002618916636267}
-  head: {fileID: 7973956789851119811}
-  headTop: {fileID: 907094647538396742}
   meshRenderer: {fileID: 6037103946870558905}
+  rightHand: {fileID: 5105002618916636267}
+  headTop: {fileID: 907094647538396742}
+  head: {fileID: 7973956789851119811}
+  Hat: {fileID: 0}
 --- !u!1 &1856696601792078119
 GameObject:
   m_ObjectHideFlags: 0

@@ -114,6 +114,7 @@ public class CommandsSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new TasksBreakSystem())
 			.Add(new TaskCompleteSystems())
 			.Add(new UseCommandSystem())
+			.Add(new HatCommandSystem())
 
 			.Inject(gameData.TwitchCommands)
 			.Inject(runtimeData)
@@ -162,6 +163,7 @@ public class PlayerSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new PlayerHudRemovingSystem())
 			.Add(new LeaderBoardSystem())
 			.Add(new PlayerUsingSystem())
+			.Add(new ChangeHatSystem())
 
 			.Inject(gameData)
 			.Inject(levelData)

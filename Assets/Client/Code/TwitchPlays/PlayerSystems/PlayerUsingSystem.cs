@@ -15,14 +15,18 @@ public class PlayerUsingSystem : IEcsRunSystem
 
 			ref var map = ref player.MapEntity.Set<MapComponent>();
 			var objEnt = map.GetObjectInPosition(player.Position);
-
+			ref var objComp = ref objEnt.Set<MapObjectComponent>();
 			if (objEnt.IsAlive())
 			{
 				if(objEnt.Has<ChestComponent>())
 				{
-					var hatId = gameData.Hats.GetRandomItem();
+					var hat = gameData.Hats.GetRandomItem();
+					if(!ContainsHat(ref player, hat))
+					{
+						player.Stats.Hats.Add(hat.Index);
+					}
 
-					Debug.Log($"Your hat ({hatId}) in another castle");
+					ObjectPool.Recycle(objComp.View);
 					map.Objects.Remove(objEnt);
 					objEnt.Destroy();
 				}
@@ -30,5 +34,14 @@ public class PlayerUsingSystem : IEcsRunSystem
 
 			playerEnt.Unset<UseCommand>();
 		}
+	}
+
+	private bool ContainsHat(ref PlayerComponent player, HatItem hat)
+	{
+		for(int i = 0; i < player.Stats.Hats.Count; ++i)
+		{
+			if (player.Stats.Hats[i] == hat.Index) return true;
+		}
+		return false;
 	}
 }
