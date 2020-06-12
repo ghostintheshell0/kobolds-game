@@ -18,7 +18,9 @@ public class ChangeHatSystem : IEcsRunSystem
 				var hatItem = GetHatItem(ref player, gameData.Hats);
 				var hat = ObjectPool.Spawn(hatItem.View);
 				hat.transform.SetParent(player.View.Skin.HeadTop);
-				hat.transform.localPosition = hatItem.Offset;
+				hat.transform.localPosition = hatItem.OffsetPosition;
+				hat.transform.localRotation = UnityEngine.Quaternion.Euler(hatItem.OffsetRotation);
+				hat.transform.localScale = hatItem.OffsetScale;
 				if (player.View.Skin.Hat != null)
 				{
 					ObjectPool.Recycle(player.View.Skin.Hat);

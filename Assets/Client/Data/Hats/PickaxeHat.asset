@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27ea661458704644a81b56432322346e, type: 3}
-  m_Name: DebugHat
+  m_Name: PickaxeHat
   m_EditorClassIdentifier: 
   chance: 100
-  View: {fileID: 2974200141137129567, guid: 7cfb5327c159256489afae68653dccdc, type: 3}
-  OffsetPosition: {x: 0, y: 0, z: 0}
-  OffsetRotation: {x: 0, y: 0, z: 0}
-  OffsetScale: {x: 0.3, y: 0.05, z: 0.3}
-  Index: 0
+  View: {fileID: 7456681521583013383, guid: c2eabb3c166393e47a80414fec298dce, type: 3}
+  OffsetPosition: {x: 0.22, y: 0.37, z: -0.42}
+  OffsetRotation: {x: 102, y: 0, z: 24.2}
+  OffsetScale: {x: 1, y: 1, z: 1}
+  Index: 1
