@@ -12,6 +12,26 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2291293553717868038, guid: b4bacec88a6811947bcc075c04b27986,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1cbc1e066282fd34eba05b69ec2a81c1, type: 2}
+    - target: {fileID: 2907872656729733029, guid: b4bacec88a6811947bcc075c04b27986,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1cbc1e066282fd34eba05b69ec2a81c1, type: 2}
+    - target: {fileID: 4292604465319703285, guid: b4bacec88a6811947bcc075c04b27986,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1cbc1e066282fd34eba05b69ec2a81c1, type: 2}
+    - target: {fileID: 5030198787953341980, guid: b4bacec88a6811947bcc075c04b27986,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e7ec2e8786b4fc47bb8c3f9c399f2a1, type: 2}
     - target: {fileID: 5409124032605646757, guid: b4bacec88a6811947bcc075c04b27986,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -72,5 +92,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: IronWall
       objectReference: {fileID: 0}
+    - target: {fileID: 7620220576958416530, guid: b4bacec88a6811947bcc075c04b27986,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1cbc1e066282fd34eba05b69ec2a81c1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4bacec88a6811947bcc075c04b27986, type: 3}

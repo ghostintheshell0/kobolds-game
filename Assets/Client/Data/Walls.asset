@@ -25,5 +25,5 @@ MonoBehaviour:
     MinOre: 1
     MaxOre: 1
     Chance: 2
-    Prefab: {fileID: 4600986448467517789, guid: 500f359e676b0084c942b62822e3261f,
+    Prefab: {fileID: 6309908830118587968, guid: c99deaaa6da54b842ac1b69ae57e1f7b,
       type: 3}
