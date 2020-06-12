@@ -16,6 +16,7 @@ public class TwitchCommands : ScriptableObject
 	public List<string> Help = default;
 	public List<string> Stats = default;
 	public List<string> Upgrade = default;
+	public List<string> Use = default;
 
 	public bool IsCommand(string text, List<string> variants)
 	{

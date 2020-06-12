@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Leopotam.Ecs;
+using UnityEngine;
 
 public static class MapComponentExtensions
 { 
@@ -16,4 +17,16 @@ public static class MapComponentExtensions
 		var pos = new Vector3(x, y, z) + map.Position;
 		return pos;
 	}
+
+	public static EcsEntity GetObjectInPosition(this ref MapComponent map, Vector2 pos)
+	{
+		for (var i = 0; i < map.Objects.Count; ++i)
+		{
+			ref var mapObjComp = ref map.Objects[i].Set<MapObjectComponent>();
+			if (mapObjComp.Position == pos) return map.Objects[i];
+		}
+
+		return EcsEntity.Null;
+	}
+	
 }

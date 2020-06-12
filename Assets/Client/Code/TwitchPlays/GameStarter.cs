@@ -113,6 +113,7 @@ public class CommandsSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new UpgradeSystem())
 			.Add(new TasksBreakSystem())
 			.Add(new TaskCompleteSystems())
+			.Add(new UseCommandSystem())
 
 			.Inject(gameData.TwitchCommands)
 			.Inject(runtimeData)
@@ -160,6 +161,7 @@ public class PlayerSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new EnableNavmeshAgentDelaySystem())
 			.Add(new PlayerHudRemovingSystem())
 			.Add(new LeaderBoardSystem())
+			.Add(new PlayerUsingSystem())
 
 			.Inject(gameData)
 			.Inject(levelData)

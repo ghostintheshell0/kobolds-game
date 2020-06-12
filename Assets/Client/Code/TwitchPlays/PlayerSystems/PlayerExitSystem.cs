@@ -14,7 +14,7 @@ public class PlayerExitSystem : IEcsRunSystem
 			ref var player = ref filter.Get1(i);
 			var playerEnt = filter.GetEntity(i);
 			ref var map = ref player.MapEntity.Set<MapComponent>();
-			var objEnt = GetObjectInPos(ref map, player.Position);
+			var objEnt = map.GetObjectInPosition(player.Position);
 
 			if (objEnt.IsAlive() && objEnt.Has<ExitComponent>())
 			{
@@ -30,17 +30,5 @@ public class PlayerExitSystem : IEcsRunSystem
 
 			playerEnt.Unset<PlayerExitCommandComponent>();
 		}
-	}
-
-	private EcsEntity GetObjectInPos(ref MapComponent map, Vector2Int pos)
-	{
-		for(var i = 0; i < map.Objects.Count; ++i)
-		{
-			ref var mapObjComp = ref map.Objects[i].Set<MapObjectComponent>();
-			if (mapObjComp.Position == pos) return map.Objects[i];
-		}
-
-		return EcsEntity.Null;
-
 	}
 }
