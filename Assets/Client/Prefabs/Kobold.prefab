@@ -512,6 +512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rightHand: {fileID: 5105002618916636267}
   head: {fileID: 7973956789851119811}
+  headTop: {fileID: 907094647538396742}
   meshRenderer: {fileID: 6037103946870558905}
 --- !u!1 &1856696601792078119
 GameObject:

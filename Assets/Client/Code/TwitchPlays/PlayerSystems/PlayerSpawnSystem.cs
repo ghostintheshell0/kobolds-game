@@ -58,6 +58,11 @@ public class PlayerSpawnSystem : IEcsRunSystem
 		player.Stats = spawnData.Stats;
 		player.Stats.WallsDestroyedInCurrentGame = 0;
 
+		var hatItem = GetHatItem(ref player, gameData.Hats);
+		var hat = ObjectPool.Spawn(hatItem.View);
+		hat.transform.SetParent(player.View.Skin.HeadTop);
+		hat.transform.localPosition = hatItem.Offset;
+
 		ref var skinComponent = ref playerEnt.Set<SkinComponent>();
 		skinComponent.View = player.View.Skin;
 
@@ -94,6 +99,16 @@ public class PlayerSpawnSystem : IEcsRunSystem
 		var wallDestroyingEnt = world.NewEntity();
 		ref var wallDestroying = ref wallDestroyingEnt.Set<WallDestroyingComponent>();
 		wallDestroying.Position = spawner.MapPosition;
+	}
+
+	private HatItem GetHatItem(ref PlayerComponent player, HatsList hats)
+	{
+		if(player.Stats.CurrentHatIndex >= player.Stats.Hats.Count)
+		{
+			return hats.NoHat;
+		}
+		var item = hats.Hats[player.Stats.Hats[player.Stats.CurrentHatIndex]];
+		return item;
 	}
 
 }

@@ -200,6 +200,6 @@ public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 
 	private void AddChestComponent(EcsEntity ent)
 	{
-
+		ent.Set<ChestComponent>();
 	}
 }

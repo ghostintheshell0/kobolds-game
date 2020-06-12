@@ -7,6 +7,7 @@ public class GameData : ScriptableObject
 	public VisualPlayerData VisualData;
 	public PlayersData PlayersData;
 	public GenerationSettings GenerationSettings;
+	public HatsList Hats;
 	public float RoundDuration;
 	public float AfterFirstLeaverRoundDuration;
 	public string TimerFormat;

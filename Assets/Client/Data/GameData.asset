@@ -16,8 +16,9 @@ MonoBehaviour:
   VisualData: {fileID: 11400000, guid: 8bd10f1f4e57eb0428d9448977c2f1d7, type: 2}
   PlayersData: {fileID: 11400000, guid: c138885e225295847a359fa3ec8473ab, type: 2}
   GenerationSettings: {fileID: 11400000, guid: d1c4b3323c9370149a4c42e558379a9d, type: 2}
-  RoundDuration: 300
-  AfterFirstLeaverRoundDuration: 50
+  Hats: {fileID: 11400000, guid: 651fcc8af98f86c499bbe14de904a636, type: 2}
+  RoundDuration: 120
+  AfterFirstLeaverRoundDuration: 20
   TimerFormat: mm\:ss
   SecretFileName: .secret
   IsDebug: 1
