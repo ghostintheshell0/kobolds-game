@@ -148,7 +148,7 @@ public class PlayerSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new PlayerMovingSystem())
 			.Add(new PlayerStopMiningSystem())
 			.Add(new PlayerStopMovingSystem())
-			.Add(new SpawnSavedPlayersSystem())
+			.Add(new SpawnEscapedPlayersSystem())
 			.Add(new PlayerExitSystem())
 			.Add(new HeadSizeChangingSystem())
 			.Add(new PlayerMiningCompleteSystem())
@@ -159,6 +159,7 @@ public class PlayerSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new PlayerRemovingSystem())
 			.Add(new EnableNavmeshAgentDelaySystem())
 			.Add(new PlayerHudRemovingSystem())
+			.Add(new LeaderBoardSystem())
 
 			.Inject(gameData)
 			.Inject(levelData)
@@ -198,7 +199,7 @@ public class LevelSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new MapsExploringSystem())
 			.Add(new DebugLogErrorsSystem())
 			.Add(new ChangeDebugUIState())
-			.Add(new ExitExploringSystem())
+			.Add(new MapObjectsExploringSystem())
 			.Add(new WallsExploringSystem())
 			.Add(new WallDestroyingSystem())
 

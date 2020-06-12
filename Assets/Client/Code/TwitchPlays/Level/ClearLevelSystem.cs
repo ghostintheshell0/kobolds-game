@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ClearLevelSystem : IEcsRunSystem
@@ -7,12 +8,11 @@ public class ClearLevelSystem : IEcsRunSystem
 
 	private readonly EcsFilter<PlayerComponent> players = default;
 	private readonly EcsFilter<PlayerHudComponent> huds = default;
-	private readonly EcsFilter<ExitComponent> exits = default;
 	private readonly EcsFilter<WallComponent> walls = default;
 	private readonly EcsFilter<SpawnerComponent> spawners = default;
 	private readonly EcsFilter<MapComponent> maps = default;
-
 	private readonly RuntimeData runtimeData = default;
+
 	private readonly EcsWorld world = default;
 
 	public void Run()
@@ -21,7 +21,6 @@ public class ClearLevelSystem : IEcsRunSystem
 		{
 			RemovePlayers();
 			RemoveHuds();
-			RemoveExit();
 			RemoveWalls();
 			RemoveSpawners();
 
@@ -46,17 +45,6 @@ public class ClearLevelSystem : IEcsRunSystem
 		}
 	}
 
-	private void RemoveExit()
-	{
-		foreach (var i in exits)
-		{
-			ref var exit = ref exits.Get1(i);
-			ObjectPool.Recycle(exit.View);
-			var e = exits.GetEntity(i);
-			e.Destroy();
-		}
-	}
-
 	private void RemoveSpawners()
 	{
 		foreach(var i in spawners)
@@ -74,10 +62,9 @@ public class ClearLevelSystem : IEcsRunSystem
 			ObjectPool.Recycle(player.View);
 
 			ref var e = ref players.GetEntity(i);
+			runtimeData.ClearLivePlayers();
 			e.Destroy();
 		}
-
-		runtimeData.ClearPlayers();
 	}
 
 	private void RemoveHuds()
@@ -97,8 +84,20 @@ public class ClearLevelSystem : IEcsRunSystem
 
 		foreach (var i in maps)
 		{
-			ref var e = ref maps.GetEntity(i);
-			e.Destroy();
+			ref var ent = ref maps.GetEntity(i);
+			ref var map = ref ent.Set<MapComponent>();
+			RemoveObjects(map.Objects);
+			ent.Destroy();
+		}
+	}
+
+	private void RemoveObjects(List<EcsEntity> objects)
+	{
+		for(int i = 0; i < objects.Count; ++i)
+		{
+			ref var mapObj = ref objects[i].Set<MapObjectComponent>();
+			ObjectPool.Recycle(mapObj.View);
+			objects[i].Destroy();
 		}
 	}
 }

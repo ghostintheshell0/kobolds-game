@@ -7,6 +7,9 @@ public class PlayerStats
 	public int Ore;
 	public int Level;
 	public int Escapes;
+	public int Deads;
 	public Color SkinColor;
 	public float HeadSize;
+	public int WallsDestroyed;
+	public int WallsDestroyedInCurrentGame;
 }

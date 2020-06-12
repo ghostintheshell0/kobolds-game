@@ -34,7 +34,8 @@ public class PlayerMiningCompleteSystem : IEcsRunSystem
 			}
 
 			player.Stats.Ore += wall.Ore;
-		//	Debug.Log($"{player.Stats.Name} now has {player.Stats.Ore} ore");
+			player.Stats.WallsDestroyed++;
+			player.Stats.WallsDestroyedInCurrentGame++;
 
 			var destroyWallEnt = world.NewEntity();
 			ref var destroyWall = ref destroyWallEnt.Set<WallDestroyingComponent>();

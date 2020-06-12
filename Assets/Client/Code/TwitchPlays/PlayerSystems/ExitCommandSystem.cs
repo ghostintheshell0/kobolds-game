@@ -23,7 +23,7 @@ public class ExitCommandSystem : IEcsRunSystem
 				playerEnt.Set<PlayerExitCommandComponent>();
 			}
 
-			if (runtimeData.IsSavedPlayer(mess.Sender))
+			if (runtimeData.IsEscapedPlayer(mess.Sender))
 			{
 				var e = world.NewEntity();
 				ref var err = ref e.Set<ErrorComponent>();

@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using System.Text;
 
 public class EndGameSystem : IEcsRunSystem
 {
@@ -6,6 +7,10 @@ public class EndGameSystem : IEcsRunSystem
 	private readonly RuntimeData runtimeData = default;
 	private readonly EcsWorld world = default;
 
+	private string namesSeparator = " , ";
+	private string namePrefix = "@";
+
+	private StringBuilder stringBuilder = new StringBuilder();
 
 	public void Run()
 	{
@@ -17,28 +22,32 @@ public class EndGameSystem : IEcsRunSystem
 		var messEnt = world.NewEntity();
 		ref var message = ref messEnt.Set<ErrorComponent>();
 
-		if (runtimeData.SavedPlayers.Count == 0)
+		var leaderBoardEnt = world.NewEntity();
+		ref var showLeaderBoard = ref leaderBoardEnt.Set<ShowLeaderBoardComponent>();
+
+		stringBuilder.Clear();
+
+		if (runtimeData.EscapedPlayers.Count == 0)
 		{
-			message.Message = $"Level completed.";
+			stringBuilder.Append($"Level completed.");
 		}
 		else
 		{
-			message.Message = $"Level completed. Saved players: ";
+			stringBuilder.Append($"Level completed. Saved players: ");
 
-			for (int i = 0; i < runtimeData.SavedPlayers.Count; ++i)
+			for (int i = 0; i < runtimeData.EscapedPlayers.Count; ++i)
 			{
-				if (runtimeData.SavedPlayers.Count - 1 == i)
-				{
-					message.Message += $"@{runtimeData.SavedPlayers[i].Name} .";
-				}
-				else
-				{
-					message.Message += $"@{runtimeData.SavedPlayers[i].Name} , ";
-				}
+				stringBuilder.Append(namePrefix);
+				stringBuilder.Append(runtimeData.EscapedPlayers[i].Name);
+				stringBuilder.Append(namesSeparator);
 			}
+			stringBuilder.Remove(stringBuilder.Length - namesSeparator.Length, namesSeparator.Length);
+			stringBuilder.Append(" .");
 		}
 
-		foreach(var i in filter)
+		message.Message = stringBuilder.ToString();
+
+		foreach (var i in filter)
 		{
 			filter.GetEntity(i).Destroy();
 		}

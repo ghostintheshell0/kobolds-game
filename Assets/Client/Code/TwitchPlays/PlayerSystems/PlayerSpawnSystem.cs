@@ -20,8 +20,15 @@ public class PlayerSpawnSystem : IEcsRunSystem
 			{
 				ref var spawnComponent = ref filter.Get1(i);
 				ref var spawner = ref GetSpawner();
-				SpawnPlayer(spawnComponent, spawner);
+				var playerEnt = SpawnPlayer(spawnComponent, spawner);
+				ref var player = ref playerEnt.Set<PlayerComponent>();
 				ClearSpawner(spawner);
+				runtimeData.AddPlayer(playerEnt);
+
+				if (!runtimeData.IsSavedPlayer(player.Stats.Name))
+				{
+					runtimeData.SavePlayer(player.Stats);
+				}
 			}
 			else
 			{
@@ -39,7 +46,7 @@ public class PlayerSpawnSystem : IEcsRunSystem
 		return ref spawner;
 	}
 
-	private void SpawnPlayer(PlayerSpawnComponent spawnData, in SpawnerComponent spawner)
+	private EcsEntity SpawnPlayer(PlayerSpawnComponent spawnData, in SpawnerComponent spawner)
 	{
 		var playerEnt = world.NewEntity();
 		ref var player = ref playerEnt.Set<PlayerComponent>();
@@ -49,6 +56,7 @@ public class PlayerSpawnSystem : IEcsRunSystem
 		player.View.transform.position = map.MapToWorld(player.Position);
 		player.MapEntity = spawner.MapEnt;
 		player.Stats = spawnData.Stats;
+		player.Stats.WallsDestroyedInCurrentGame = 0;
 
 		ref var skinComponent = ref playerEnt.Set<SkinComponent>();
 		skinComponent.View = player.View.Skin;
@@ -72,7 +80,7 @@ public class PlayerSpawnSystem : IEcsRunSystem
 		playerHud.View.Canvas.transform.SetParent(player.View.transform);
 		playerHud.View.transform.localPosition = playerHud.View.Offset;
 
-		runtimeData.AddPlayer(playerEnt);
+		return playerEnt;
 	}
 
 

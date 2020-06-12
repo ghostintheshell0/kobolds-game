@@ -1,7 +1,5 @@
 ﻿using Leopotam.Ecs;
 using System.Collections.Generic;
-using System.Linq;
-
 public class LeaderBoardSystem : IEcsRunSystem
 {
 	private readonly EcsFilter<ShowLeaderBoardComponent> filter = default;
@@ -16,7 +14,7 @@ public class LeaderBoardSystem : IEcsRunSystem
 		levelData.LeaderBoard.gameObject.SetActive(true);
 		levelData.LeaderBoard.Clear();
 
-		var wallsDestroyingTop = GetOrderedRaws(p => p.WallsDestroyed);
+		var wallsDestroyingTop = GetOrderedRaws(p => p.WallsDestroyedInCurrentGame);
 
 		for (int i = 0; i < wallsDestroyingTop.Count; ++i)
 		{

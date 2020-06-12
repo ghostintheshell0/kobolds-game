@@ -30,7 +30,7 @@ public class HeadSizeCommandSystem : IEcsRunSystem
 					SendError($"@{mess.Sender} syntax error. Example: {commands.HeadSize[0]} 1,5");
 				}
 			}
-			else if (runtimeData.IsSavedPlayer(mess.Sender))
+			else if (runtimeData.IsEscapedPlayer(mess.Sender))
 			{
 				SendError($"@{mess.Sender} , your character already leave from level.");
 			}

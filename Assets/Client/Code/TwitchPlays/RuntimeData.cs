@@ -1,25 +1,41 @@
 ﻿using Leopotam.Ecs;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RuntimeData
 {
 	private List<PlayerStats> savedPlayersData = new List<PlayerStats>();
-	private List<EcsEntity> players = new List<EcsEntity>();
+	private List<EcsEntity> livePlayers = new List<EcsEntity>();
+	private List<PlayerStats> playersInLastGame = new List<PlayerStats>();
+	private List<PlayerStats> escapedPlayers = new List<PlayerStats>();
+
 	public bool IsDoom = false;
 
 	public void AddPlayer(EcsEntity playerEntity)
 	{
-		players.Add(playerEntity);
+		var stats = playerEntity.Set<PlayerComponent>().Stats;
+		livePlayers.Add(playerEntity);
+		playersInLastGame.Add(stats);
+	}
+
+	public void ClearPlayersInLastGame()
+	{
+		playersInLastGame.Clear();
+	}
+
+	public void ClearLivePlayers()
+	{
+		livePlayers.Clear();
 	}
 
 	public EcsEntity GetPlayer(string playerName)
 	{
-		for (int i = 0; i < players.Count; ++i)
+		for (int i = 0; i < livePlayers.Count; ++i)
 		{
-			if (!players[i].Has<PlayerComponent>()) continue;
-			ref var player = ref players[i].Set<PlayerComponent>();
-			if (player.Stats.Name == playerName) return players[i];
+			if (!livePlayers[i].Has<PlayerComponent>()) continue;
+			ref var player = ref livePlayers[i].Set<PlayerComponent>();
+			if (player.Stats.Name == playerName) return livePlayers[i];
 		}
 
 		return default;
@@ -38,58 +54,65 @@ public class RuntimeData
 
 	public bool ContainsPlayer(string playerName)
 	{
-
-		for(int i = 0; i < players.Count; ++i)
+		for(int i = 0; i < livePlayers.Count; ++i)
 		{
-			if (!players[i].Has<PlayerComponent>()) continue;
-			ref var player = ref players[i].Set<PlayerComponent>();
+			if (!livePlayers[i].Has<PlayerComponent>()) continue;
+			ref var player = ref livePlayers[i].Set<PlayerComponent>();
 			if (player.Stats.Name == playerName) return true;
 		}
 
 		return false;
 	}
 
-	public void SavePlayer(EcsEntity playerEnt)
+	public void SavePlayer(PlayerStats data)
 	{
-		ref var playerComp = ref playerEnt.Set<PlayerComponent>();
-		ref var skinComp = ref playerEnt.Set<SkinComponent>();
-
-		savedPlayersData.Add(playerComp.Stats);
+		savedPlayersData.Add(data);
 	}
 
-	public void ClearSavedPlayers()
+	public bool IsSavedPlayer(string playerName)
 	{
-		savedPlayersData.Clear();
-	}
+		for (int i = 0; i < savedPlayersData.Count; ++i)
+		{
+			if (savedPlayersData[i].Name == playerName) return true;
+		}
 
-	public void ClearPlayers()
-	{
-		players.Clear();
+		return false;
 	}
 
 	public void RemovePlayer(string playerName)
 	{
-		for (int i = 0; i < players.Count; ++i)
+		for (int i = 0; i < livePlayers.Count; ++i)
 		{
-			if (!players[i].Has<PlayerComponent>()) continue;
-			ref var player = ref players[i].Set<PlayerComponent>();
+			if (!livePlayers[i].Has<PlayerComponent>()) continue;
+			ref var player = ref livePlayers[i].Set<PlayerComponent>();
 			if (player.Stats.Name == playerName)
 			{
-				players.RemoveAt(i);
+				livePlayers.RemoveAt(i);
 				return;
 			}
 		}
 	}
 
-	public bool IsSavedPlayer(string playerName)
+	public bool IsEscapedPlayer(string playerName)
 	{
-		for (int i = 0; i < savedPlayersData.Count; i++)
+		for (int i = 0; i < escapedPlayers.Count; i++)
 		{
-			if (savedPlayersData[i].Name == playerName) return true;
+			if (escapedPlayers[i].Name == playerName) return true;
 		}
 		return false;
 	}
 
-	public int PlayersCount => players.Count;
-	public IReadOnlyList<PlayerStats> SavedPlayers => savedPlayersData;
+	public void ClearEscapedPlayers()
+	{
+		escapedPlayers.Clear();
+	}
+
+	public void EscapePlayer(PlayerStats data)
+	{
+		escapedPlayers.Add(data);
+	}
+
+	public int PlayersCount => livePlayers.Count;
+	public IReadOnlyList<PlayerStats> EscapedPlayers => escapedPlayers;
+	public IReadOnlyList<PlayerStats> PlayersInLastGame => playersInLastGame;
 }

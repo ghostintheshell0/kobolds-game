@@ -31,7 +31,7 @@ public class ColorCommandSystem : IEcsRunSystem
 					SendError($"@{mess.Sender} syntax error. Example: {commands.Color[0]} #FF0000");
 				}
 			}
-			else if (runtimeData.IsSavedPlayer(mess.Sender))
+			else if (runtimeData.IsEscapedPlayer(mess.Sender))
 			{
 				SendError($"@{mess.Sender} , your character already leave from level.");
 			}

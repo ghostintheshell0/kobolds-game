@@ -27,7 +27,7 @@ public class StatsMessagesSystem : IEcsRunSystem
 				ref var player = ref playerEnt.Set<PlayerComponent>();
 				stats = player.Stats;
 			}
-			else if (runtimeData.IsSavedPlayer(mess.Sender))
+			else if (runtimeData.IsEscapedPlayer(mess.Sender))
 			{
 				stats = runtimeData.GetSavedPlayer(mess.Sender);
 			}

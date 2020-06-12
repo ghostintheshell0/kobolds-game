@@ -98,6 +98,8 @@ public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 
 	private void GenerateObjects(ref MapComponent map, GenerationSettings settings)
 	{
+		map.Objects = new List<EcsEntity>();
+
 		for(var i = 0; i < settings.MapObjects.List.Count; ++i)
 		{
 			var objData = settings.MapObjects.List[i];
@@ -105,12 +107,13 @@ public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 			{
 				var chance = Random.Range(0, 1f);
 				if (objData.Chance < chance) continue;
-				GenerateObject(ref map, objData);
+				var mapObj = GenerateObject(ref map, objData);
+				map.Objects.Add(mapObj);
 			}
 		}
 	}
 
-	private void GenerateObject(ref MapComponent map, MapObject objData)
+	private EcsEntity GenerateObject(ref MapComponent map, MapObject objData)
 	{
 
 		var x = Random.Range(objData.BordersOffset, map.Size.x - objData.BordersOffset);
@@ -139,6 +142,7 @@ public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 
 		AddSpecialComponents(objEnt, ref mapObj);
 		Debug.Log($"{mapObj.View.name} in {mapObj.Position}");
+		return objEnt;
 	}
 
 	private void AddSpecialComponents(EcsEntity objEnt, ref MapObjectComponent mapObj)

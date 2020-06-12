@@ -16,7 +16,7 @@ public class PlayerEnterSystem : IEcsRunSystem
 			ref var mess = ref filter.Get1(i);
 			if (commands.IsCommand(mess.FirstWord, commands.Enter) == false) continue;
 			
-			if (runtimeData.IsSavedPlayer(mess.Sender))
+			if (runtimeData.IsEscapedPlayer(mess.Sender))
 			{
 				SendMessage($"@{mess.Sender} already escaped from this level");
 				continue;
@@ -30,7 +30,7 @@ public class PlayerEnterSystem : IEcsRunSystem
 			
 			var ent = world.NewEntity();
 			ref var spawn = ref ent.Set<PlayerSpawnComponent>();
-			spawn.Stats = new PlayerStats()
+			var stats = new PlayerStats()
 			{
 				Name = mess.Sender,
 				Level = gameData.PlayersData.StartPlayerValues.Level,
@@ -39,6 +39,9 @@ public class PlayerEnterSystem : IEcsRunSystem
 				HeadSize = gameData.PlayersData.StartPlayerValues.HeadSize,
 				SkinColor = gameData.PlayersData.StartPlayerValues.SkinColor,
 			};
+
+			spawn.Stats = stats;
+
 		}
 	}
 

@@ -27,7 +27,7 @@ public class UpgradeSystem : IEcsRunSystem
 				ref var player = ref playerEnt.Set<PlayerComponent>();
 				stats = player.Stats;
 			}
-			else if (runtimeData.IsSavedPlayer(mess.Sender))
+			else if (runtimeData.IsEscapedPlayer(mess.Sender))
 			{
 				var playerEnt = runtimeData.GetSavedPlayer(mess.Sender);
 				var player = runtimeData.GetSavedPlayer(mess.Sender);

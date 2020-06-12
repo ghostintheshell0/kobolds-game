@@ -15,8 +15,9 @@ public class StartGameSystem : IEcsRunSystem
 		{
 			CreateLevel();
 			CreateTimer();
-			SpawnSavedPlayers();
+			SpawnEscapedPlayers();
 			runtimeData.IsDoom = false;
+			runtimeData.ClearPlayersInLastGame();
 			filter.GetEntity(i).Destroy();
 		}
 	}
@@ -38,9 +39,9 @@ public class StartGameSystem : IEcsRunSystem
 		timer.Time = gameData.RoundDuration;
 	}
 
-	private void SpawnSavedPlayers()
+	private void SpawnEscapedPlayers()
 	{
 		var e = world.NewEntity();
-		ref var savedPlayers = ref e.Set<SpawnSavedPlayersComponent>();
+		ref var escapedPlayers = ref e.Set<SpawnSavedPlayersComponent>();
 	}
 }

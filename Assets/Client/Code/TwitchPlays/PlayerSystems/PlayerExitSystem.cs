@@ -19,17 +19,13 @@ public class PlayerExitSystem : IEcsRunSystem
 			if (objEnt.IsAlive() && objEnt.Has<ExitComponent>())
 			{
 				ref var exit = ref objEnt.Set<ExitComponent>();
-				if (exit.Position == player.Position)
-				{
-					player.Stats.Escapes++;
-					var doomEnt = world.NewEntity();
-					ref var doom = ref doomEnt.Set<DoomComponent>();
+				player.Stats.Escapes++;
+				var doomEnt = world.NewEntity();
+				ref var doom = ref doomEnt.Set<DoomComponent>();
 
-					runtimeData.SavePlayer(playerEnt);
+				runtimeData.EscapePlayer(player.Stats);
 
-					playerEnt.Set<RemovingComponent>();
-
-				}
+				playerEnt.Set<RemovingComponent>();
 			}
 
 			playerEnt.Unset<PlayerExitCommandComponent>();

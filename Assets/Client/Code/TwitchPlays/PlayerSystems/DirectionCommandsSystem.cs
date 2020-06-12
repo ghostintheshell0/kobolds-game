@@ -42,7 +42,7 @@ public class DirectionCommandsSystem : IEcsRunSystem
 					}
 				}
 
-				if(runtimeData.IsSavedPlayer(mess.Sender))
+				if(runtimeData.IsEscapedPlayer(mess.Sender))
 				{
 					var e = world.NewEntity();
 					ref var err = ref e.Set<ErrorComponent>();
