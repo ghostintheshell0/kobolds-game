@@ -22,5 +22,6 @@ public class LeaderBoard : MonoBehaviour
 		var row = ObjectPool.Spawn(rowTemplate);
 		row.transform.SetParent(container);
 		row.Show(data);
+		rows.Add(row);
 	}
 }
