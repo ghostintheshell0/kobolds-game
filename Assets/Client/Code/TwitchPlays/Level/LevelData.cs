@@ -16,4 +16,5 @@ public class LevelData : MonoBehaviour
 	public CameraSettings CameraSettings;
 	public EventSystem EventsSystem;
 	public KeyCode DebugInputButton;
+	public KeyCode SaveGameButton;
 }

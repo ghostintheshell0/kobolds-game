@@ -115,4 +115,5 @@ public class RuntimeData
 	public int PlayersCount => livePlayers.Count;
 	public IReadOnlyList<PlayerStats> EscapedPlayers => escapedPlayers;
 	public IReadOnlyList<PlayerStats> PlayersInLastGame => playersInLastGame;
+	public List<PlayerStats> SavedPlayers => savedPlayersData;
 }

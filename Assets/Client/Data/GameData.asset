@@ -20,5 +20,6 @@ MonoBehaviour:
   RoundDuration: 120
   AfterFirstLeaverRoundDuration: 20
   TimerFormat: mm\:ss
-  SecretFileName: .secret
+  SecretFileName: LocalData/secret
+  PlayersSaveFile: LocalData/players
   IsDebug: 1

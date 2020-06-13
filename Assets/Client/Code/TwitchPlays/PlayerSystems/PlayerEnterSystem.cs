@@ -53,7 +53,7 @@ public class PlayerEnterSystem : IEcsRunSystem
 				Ore = gameData.PlayersData.StartPlayerValues.Ore,
 				Escapes = gameData.PlayersData.StartPlayerValues.Escapes,
 				HeadSize = gameData.PlayersData.StartPlayerValues.HeadSize,
-				SkinColor = gameData.PlayersData.StartPlayerValues.SkinColor,
+	//			SkinColor = gameData.PlayersData.StartPlayerValues.SkinColor,
 				Deads = 0,
 				WallsDestroyed = 0,
 				WallsDestroyedInCurrentGame = 0

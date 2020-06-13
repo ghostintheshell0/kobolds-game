@@ -63,10 +63,10 @@ public class PlayerSpawnSystem : IEcsRunSystem
 
 		ref var skinComponent = ref playerEnt.Set<SkinComponent>();
 		skinComponent.View = player.View.Skin;
-
+/*
 		ref var skinColor = ref playerEnt.Set<SkinColorChangerComponent>();
 		skinColor.Color = spawnData.Stats.SkinColor;
-
+		*/
 		ref var headSize = ref playerEnt.Set<HeadSizeChangerComponent>();
 		headSize.Size = spawnData.Stats.HeadSize;
 

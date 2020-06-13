@@ -22,7 +22,7 @@ public class ColorCommandSystem : IEcsRunSystem
 				{
 					var playerEnt = runtimeData.GetPlayer(mess.Sender);
 					ref var player = ref playerEnt.Set<PlayerComponent>();
-					player.Stats.SkinColor = color;
+			//		player.Stats.SkinColor = color;
 					ref var skinChanger = ref playerEnt.Set<SkinColorChangerComponent>();
 					skinChanger.Color = color;
 				}

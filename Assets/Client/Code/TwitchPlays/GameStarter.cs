@@ -164,6 +164,8 @@ public class PlayerSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new LeaderBoardSystem())
 			.Add(new PlayerUsingSystem())
 			.Add(new ChangeHatSystem())
+			.Add(new SavePlayersSystem())
+			.Add(new LoadPlayersSystem())
 
 			.Inject(gameData)
 			.Inject(levelData)
