@@ -36,3 +36,9 @@ secret.*
 ehthumbs.db
 [Tt]humbs.db
 [Dd]esktop.ini
+
+# ===== #
+# Saves #
+# ===== #
+/Assets/[Ll]ocalData/
+/Assets/LocalData.meta
