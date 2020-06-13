@@ -15,4 +15,6 @@ MonoBehaviour:
   items:
   - {fileID: 11400000, guid: 3979f5ecd15c6a542abd188b6cb3e35e, type: 2}
   - {fileID: 11400000, guid: 5e650b6f03d2de84ebc3d307029570b5, type: 2}
+  - {fileID: 11400000, guid: a42ef0d019d9d7748a506194b3b20a98, type: 2}
+  - {fileID: 11400000, guid: de9c28edcab441449a9c391d7f158a82, type: 2}
   NoHat: {fileID: 11400000, guid: 3979f5ecd15c6a542abd188b6cb3e35e, type: 2}

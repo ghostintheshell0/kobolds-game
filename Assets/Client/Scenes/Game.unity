@@ -1057,6 +1057,7 @@ MonoBehaviour:
     MovingSpeed: 4
   EventsSystem: {fileID: 1685931634}
   DebugInputButton: 9
+  SaveGameButton: 286
 --- !u!4 &95822387
 Transform:
   m_ObjectHideFlags: 0

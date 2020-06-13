@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ea661458704644a81b56432322346e, type: 3}
+  m_Name: Helmet
+  m_EditorClassIdentifier: 
+  chance: 100
+  View: {fileID: 4400803684966693795, guid: 1ab9a286f36f88248968ba288e88c3a0, type: 3}
+  OffsetPosition: {x: 0, y: -0.147, z: -0.005}
+  OffsetRotation: {x: 0, y: 0, z: 0}
+  OffsetScale: {x: 1, y: 1, z: 1}
+  Index: 3
