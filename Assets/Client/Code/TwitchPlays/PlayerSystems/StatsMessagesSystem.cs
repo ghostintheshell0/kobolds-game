@@ -21,20 +21,10 @@ public class StatsMessagesSystem : IEcsRunSystem
 
 			PlayerStats stats = null;
 
-			if (runtimeData.ContainsPlayer(mess.Sender))
-			{
-				var playerEnt = runtimeData.GetPlayer(mess.Sender);
-				ref var player = ref playerEnt.Set<PlayerComponent>();
-				stats = player.Stats;
-			}
-			else if (runtimeData.IsEscapedPlayer(mess.Sender))
+			if (runtimeData.IsSavedPlayer(mess.Sender))
 			{
 				stats = runtimeData.GetSavedPlayer(mess.Sender);
-			}
-
-			if(stats != null)
-			{
-				err.Message = $"@{mess.Sender} Level: {stats.Level}; Ore {stats.CurrentOre}/{stats.Level * gameData.PlayersData.LevelCostMultipler}; Escaped {stats.Escapes} times";
+				err.Message = $"@{mess.Sender} Level: {stats.Level}; Ore {stats.CurrentOre}/{stats.Level * gameData.PlayersData.LevelCostMultipler}; Total mined {stats.TotalOre} ore; {stats.Hats.Count} hats; Escaped {stats.Escapes} times";
 			}
 			else
 			{
