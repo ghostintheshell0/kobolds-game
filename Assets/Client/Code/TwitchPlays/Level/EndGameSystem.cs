@@ -25,6 +25,9 @@ public class EndGameSystem : IEcsRunSystem
 		var leaderBoardEnt = world.NewEntity();
 		ref var showLeaderBoard = ref leaderBoardEnt.Set<ShowLeaderBoardComponent>();
 
+		var saveGameEnt = world.NewEntity();
+		saveGameEnt.Set<SavePlayersComponent>();
+
 		stringBuilder.Clear();
 
 		if (runtimeData.EscapedPlayers.Count == 0)

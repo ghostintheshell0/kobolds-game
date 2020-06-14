@@ -61,6 +61,10 @@ public class ClearLevelSystem : IEcsRunSystem
 			ref var player = ref players.Get1(i);
 			ObjectPool.Recycle(player.View);
 
+			player.Stats.CurrentOre = 0;
+			player.Stats.WallsDestroyedInCurrentGame = 0;
+			player.Stats.Level = 1;
+
 			ref var e = ref players.GetEntity(i);
 			runtimeData.ClearLivePlayers();
 			e.Destroy();

@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 
 public class SavePlayersSystem : IEcsRunSystem
 {
+	private readonly EcsFilter<SavePlayersComponent> filter = default;
+
 	private readonly RuntimeData runtimeData = default;
 	private readonly LevelData levelData = default;
 	private readonly GameData gameData = default;
@@ -15,6 +17,15 @@ public class SavePlayersSystem : IEcsRunSystem
 		if (Input.GetKeyDown(levelData.SaveGameButton))
 		{
 			Save();
+		}
+
+		if(filter.GetEntitiesCount() > 0)
+		{
+			Save();
+			foreach(var i in filter)
+			{
+				filter.GetEntity(i).Destroy();
+			}
 		}
 	}
 
