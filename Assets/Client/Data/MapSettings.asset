@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walls: {fileID: 11400000, guid: 5a995637e4dbbf44783c41519ff161a3, type: 2}
   mapObjects: {fileID: 11400000, guid: 0fc74c53e79c0e244a2b5f836896520b, type: 2}
-  mapSize: {x: 5, y: 5}
+  mapSize: {x: 11, y: 11}
   totalSpawners: 12
   exitBorderOffset: 1
   startPoint: {x: -4.5, y: 0, z: -5}

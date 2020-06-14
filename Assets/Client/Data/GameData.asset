@@ -17,10 +17,9 @@ MonoBehaviour:
   PlayersData: {fileID: 11400000, guid: c138885e225295847a359fa3ec8473ab, type: 2}
   GenerationSettings: {fileID: 11400000, guid: d1c4b3323c9370149a4c42e558379a9d, type: 2}
   Hats: {fileID: 11400000, guid: 651fcc8af98f86c499bbe14de904a636, type: 2}
-  RoundDuration: 120
-  AfterFirstLeaverRoundDuration: 20
-  TimerFormat: mm\:ss
+  RoundDuration: 420
+  AfterFirstLeaverRoundDuration: 90
   LocalDataPath: LocalData
   SecretFileName: secret
   PlayersSaveFile: players
-  IsDebug: 1
+  IsDebug: 0
