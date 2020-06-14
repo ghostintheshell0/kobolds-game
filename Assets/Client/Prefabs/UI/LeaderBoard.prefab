@@ -555,6 +555,7 @@ MonoBehaviour:
   container: {fileID: 5389236162570697027}
   rowTemplate: {fileID: 2280916220827241562, guid: 6cfce3a839c682e438612766d6861efe,
     type: 3}
+  Size: 5
 --- !u!1 &5389236163965408022
 GameObject:
   m_ObjectHideFlags: 0

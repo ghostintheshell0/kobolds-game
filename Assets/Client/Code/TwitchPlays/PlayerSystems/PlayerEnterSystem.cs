@@ -50,7 +50,7 @@ public class PlayerEnterSystem : IEcsRunSystem
 			{
 				Name = playerName,
 				Level = gameData.PlayersData.StartPlayerValues.Level,
-				Ore = gameData.PlayersData.StartPlayerValues.Ore,
+				CurrentOre = gameData.PlayersData.StartPlayerValues.CurrentOre,
 				Escapes = gameData.PlayersData.StartPlayerValues.Escapes,
 				HeadSize = gameData.PlayersData.StartPlayerValues.HeadSize,
 	//			SkinColor = gameData.PlayersData.StartPlayerValues.SkinColor,

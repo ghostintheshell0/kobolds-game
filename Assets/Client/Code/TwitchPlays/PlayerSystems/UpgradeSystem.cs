@@ -37,16 +37,16 @@ public class UpgradeSystem : IEcsRunSystem
 			if(stats != null)
 			{ 
 				var cost = stats.Level * gameData.PlayersData.LevelCostMultipler;
-				if (stats.Ore >= cost)
+				if (stats.CurrentOre >= cost)
 				{
 					stats.Level++;
-					stats.Ore -= cost;
+					stats.CurrentOre -= cost;
 					var nextUpgradeCost = stats.Level * gameData.PlayersData.LevelCostMultipler;
-					err.Message = $"@{stats.Name} now {stats.Level} level. For next level need {stats.Ore}/{nextUpgradeCost} ore.";
+					err.Message = $"@{stats.Name} now {stats.Level} level. For next level need {stats.CurrentOre}/{nextUpgradeCost} ore.";
 				}
 				else
 				{
-					err.Message = $"@{stats.Name} need more ore: {stats.Ore}/{cost}.";
+					err.Message = $"@{stats.Name} need more ore: {stats.CurrentOre}/{cost}.";
 				}
 			}
 			else

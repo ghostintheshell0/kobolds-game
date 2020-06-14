@@ -67,6 +67,8 @@ public class PlayerSpawnSystem : IEcsRunSystem
 		player.MapEntity = spawner.MapEnt;
 		player.Stats = spawnData.Stats;
 		player.Stats.WallsDestroyedInCurrentGame = 0;
+		player.Stats.Level = 1;
+		player.Stats.CurrentOre = 0;
 
 		ref var changeHat = ref playerEnt.Set<ChangeHatComponent>();
 		changeHat.HatIndex = player.Stats.CurrentHatIndex;

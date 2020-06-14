@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerStats
 {
 	public string Name;
-	public int Ore;
+	public int CurrentOre;
+	public int TotalOre;
 	public int Level;
 	public int Escapes;
 	public int Deads;

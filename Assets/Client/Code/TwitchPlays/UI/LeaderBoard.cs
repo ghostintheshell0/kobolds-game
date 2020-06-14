@@ -5,6 +5,9 @@ public class LeaderBoard : MonoBehaviour
 {
 	[SerializeField] private Transform container = default;
 	[SerializeField] private LeaderBoardRow rowTemplate = default;
+
+	public int Size;
+
 	private List<LeaderBoardRow> rows = new List<LeaderBoardRow>();
 
 	public void Clear()

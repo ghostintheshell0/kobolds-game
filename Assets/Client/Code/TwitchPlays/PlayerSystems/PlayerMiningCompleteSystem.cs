@@ -33,7 +33,8 @@ public class PlayerMiningCompleteSystem : IEcsRunSystem
 				continue;
 			}
 
-			player.Stats.Ore += wall.Ore;
+			player.Stats.CurrentOre += wall.Ore;
+			player.Stats.TotalOre += wall.Ore;
 			player.Stats.WallsDestroyed++;
 			player.Stats.WallsDestroyedInCurrentGame++;
 

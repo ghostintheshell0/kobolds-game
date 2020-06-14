@@ -34,7 +34,7 @@ public class StatsMessagesSystem : IEcsRunSystem
 
 			if(stats != null)
 			{
-				err.Message = $"@{mess.Sender} Level: {stats.Level}; Ore {stats.Ore}/{stats.Level * gameData.PlayersData.LevelCostMultipler}; Escaped {stats.Escapes} times";
+				err.Message = $"@{mess.Sender} Level: {stats.Level}; Ore {stats.CurrentOre}/{stats.Level * gameData.PlayersData.LevelCostMultipler}; Escaped {stats.Escapes} times";
 			}
 			else
 			{

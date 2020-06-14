@@ -10,7 +10,6 @@ public class LevelData : MonoBehaviour
 	public DebugOutput DebugOutput;
 	public MonoPlayer PlayerTemplate;
 	public MonoPlayerHUD PlayerHUDTemplate;
-	public LeaderBoard LeaderBoard;
 	public TwitchConnectionUI TwitchConnectionUI;
 	public MonoGameUI GameUI;
 	public CameraSettings CameraSettings;

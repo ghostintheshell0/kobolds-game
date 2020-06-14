@@ -10,8 +10,7 @@ public class MonoGameUI : MonoBehaviour
 	[SerializeField] private Camera arrowsCamera = default;
 	[SerializeField] private GameObject directionArrowsCameraObject = default;
 	[Space]
-	[SerializeField] private LeaderBoard minersTop = default;
-	[SerializeField] private LeaderBoard levelsTop = default;
+	[SerializeField] private LeaderBoard totalOreTop = default;
 
 	[SerializeField] private Transform[] arrowTexts = default;
 
@@ -20,4 +19,5 @@ public class MonoGameUI : MonoBehaviour
 	public Transform[] ArrowTexts => arrowTexts;
 	public GameObject DirectionArrowsCameraObject => directionArrowsCameraObject;
 	public MonoTimer LevelTimer => levelTimer;
+	public LeaderBoard TotalOreTop => totalOreTop;
 }

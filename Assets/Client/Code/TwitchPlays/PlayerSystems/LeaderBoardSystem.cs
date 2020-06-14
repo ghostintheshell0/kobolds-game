@@ -1,5 +1,7 @@
 ﻿using Leopotam.Ecs;
 using System.Collections.Generic;
+using UnityEngine;
+
 public class LeaderBoardSystem : IEcsRunSystem
 {
 	private readonly EcsFilter<ShowLeaderBoardComponent> filter = default;
@@ -11,16 +13,16 @@ public class LeaderBoardSystem : IEcsRunSystem
 	{
 		if (filter.IsEmpty()) return;
 
-		levelData.LeaderBoard.Clear();
+		levelData.GameUI.TotalOreTop.Clear();
 
-		var wallsDestroyingTop = GetOrderedRaws(p => p.WallsDestroyedInCurrentGame);
+		var totalOreTop = GetOrderedRaws(runtimeData.SavedPlayers, p => p.TotalOre);
 
-		for (int i = 0; i < wallsDestroyingTop.Count; ++i)
+		var leaderBoardRows = Mathf.Min(totalOreTop.Count, levelData.GameUI.TotalOreTop.Size);
+
+		for (int i = 0; i < leaderBoardRows; ++i)
 		{
-			levelData.LeaderBoard.AddRow(wallsDestroyingTop[i]);
+			levelData.GameUI.TotalOreTop.AddRow(totalOreTop[i]);
 		}
-
-		levelData.LeaderBoard.gameObject.SetActive(wallsDestroyingTop.Count > 0);
 		
 		foreach (var i in filter)
 		{
@@ -28,16 +30,16 @@ public class LeaderBoardSystem : IEcsRunSystem
 		}
 	}
 
-	public List<LeaderBoardRowData> GetOrderedRaws(System.Func<PlayerStats, int> selector)
+	public List<LeaderBoardRowData> GetOrderedRaws(IReadOnlyList<PlayerStats> statsList, System.Func<PlayerStats, int> selector)
 	{
-		var list = new List<LeaderBoardRowData>(runtimeData.PlayersInLastGame.Count);
+		var list = new List<LeaderBoardRowData>(statsList.Count);
 
-		for(int i = 0; i < runtimeData.PlayersInLastGame.Count; ++i)
+		for(int i = 0; i < statsList.Count; ++i)
 		{
 			var data = new LeaderBoardRowData()
 			{
-				Name = runtimeData.PlayersInLastGame[i].Name,
-				Value = selector(runtimeData.PlayersInLastGame[i]),
+				Name = statsList[i].Name,
+				Value = selector(statsList[i]),
 			};
 
 			list.Add(data);
