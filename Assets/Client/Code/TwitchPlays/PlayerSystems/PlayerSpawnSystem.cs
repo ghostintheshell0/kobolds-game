@@ -93,6 +93,10 @@ public class PlayerSpawnSystem : IEcsRunSystem
 		playerHud.View.Canvas.transform.SetParent(player.View.transform);
 		playerHud.View.transform.localPosition = playerHud.View.Offset;
 
+		ref var lookToCamera = ref playerHudEnt.Set<LookToObjectComponent>();
+		lookToCamera.Transform = playerHud.View.transform;
+		lookToCamera.Target = levelData.Camera.transform;
+
 		return playerEnt;
 	}
 

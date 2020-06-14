@@ -8,6 +8,9 @@ public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 	private readonly EcsWorld world = default;
 	private Dictionary<MapObjectType, System.Action<EcsEntity>> mapObjectSpecialComponents;
 
+	private List<Vector2Int> busyCells = new List<Vector2Int>();
+	private List<Vector2Int> allCells = new List<Vector2Int>();
+
 	public void Init()
 	{
 		mapObjectSpecialComponents = new Dictionary<MapObjectType, System.Action<EcsEntity>>()
@@ -29,6 +32,7 @@ public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 
 	private void Generate(GenerationSettings settings)
 	{
+
 		var mapEnt = world.NewEntity();
 		ref var map = ref mapEnt.Set<MapComponent>();
 		map.Entity = mapEnt;
@@ -98,28 +102,38 @@ public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 
 	private void GenerateObjects(ref MapComponent map, GenerationSettings settings)
 	{
+		busyCells.Clear();
 		map.Objects = new List<EcsEntity>();
 
 		for(var i = 0; i < settings.MapObjects.List.Count; ++i)
 		{
 			var objData = settings.MapObjects.List[i];
-			for(int k = 0; k < objData.Count; ++k)
+			for (int k = 0; k < objData.Count; ++k)
 			{
 				var chance = Random.Range(0, 1f);
 				if (objData.Chance < chance) continue;
+
 				var mapObj = GenerateObject(ref map, objData);
-				map.Objects.Add(mapObj);
+				if (!mapObj.IsNull())
+				{
+					map.Objects.Add(mapObj);
+				}
 			}
 		}
 	}
 
 	private EcsEntity GenerateObject(ref MapComponent map, MapObject objData)
 	{
+		GetAllCells(ref map, objData);
+		RemoveBusyCells();
+		if(allCells.Count == 0)
+		{
+			Debug.LogWarning($"No have free cell for {objData.Template.name}");
+			return EcsEntity.Null;
+		}
+		var pos = allCells[Random.Range(0, allCells.Count)];
+		busyCells.Add(pos);
 
-		var x = Random.Range(objData.BordersOffset, map.Size.x - objData.BordersOffset);
-		var y = Random.Range(objData.BordersOffset, map.Size.y - objData.BordersOffset);
-		var pos = new Vector2Int(x, y);
-		
 		var objEnt = world.NewEntity();
 		ref var mapObj = ref objEnt.Set<MapObjectComponent>();
 		mapObj.Position = pos;
@@ -144,6 +158,30 @@ public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 		Debug.Log($"{mapObj.View.name} in {mapObj.Position}");
 		return objEnt;
 	}
+
+	private void GetAllCells(ref MapComponent map, MapObject mapObj)
+	{
+		allCells.Clear();
+		var w = map.Size.x - mapObj.BordersOffset;
+		var h = map.Size.y - mapObj.BordersOffset;
+
+		for (int ix = mapObj.BordersOffset; ix < w; ++ix)
+		{
+			for (int iy = mapObj.BordersOffset; iy < h; ++iy)
+			{
+				allCells.Add(new Vector2Int(ix, iy));
+			}
+		}
+	}
+
+	private void RemoveBusyCells()
+	{
+		for(int i = 0; i < busyCells.Count; ++i)
+		{
+			allCells.Remove(busyCells[i]);
+		}
+	}
+
 
 	private void AddSpecialComponents(EcsEntity objEnt, ref MapObjectComponent mapObj)
 	{

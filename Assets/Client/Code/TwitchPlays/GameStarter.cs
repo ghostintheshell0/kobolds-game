@@ -157,7 +157,6 @@ public class PlayerSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new PlayerMiningCompleteSystem())
 			.Add(new PlayerMovingCompleteSystem())
 			.Add(new MinigProgressSystem())
-			.Add(new PlayerHudLookToCameraSystem())
 			.Add(new SkinColorChangingSystem())
 			.Add(new PlayerRemovingSystem())
 			.Add(new EnableNavmeshAgentDelaySystem())
@@ -209,6 +208,10 @@ public class LevelSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new MapObjectsExploringSystem())
 			.Add(new WallsExploringSystem())
 			.Add(new WallDestroyingSystem())
+			.Add(new LookToCameraSystem())
+			.Add(new DirectionArrowsSystem())
+			.Add(new ObjectsRotationSystem())
+			.Add(new ObjectMovingSystem())
 
 			.Inject(gameData)
 			.Inject(levelData)

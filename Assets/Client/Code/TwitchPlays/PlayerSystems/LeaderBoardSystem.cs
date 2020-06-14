@@ -11,7 +11,6 @@ public class LeaderBoardSystem : IEcsRunSystem
 	{
 		if (filter.IsEmpty()) return;
 
-		levelData.LeaderBoard.gameObject.SetActive(true);
 		levelData.LeaderBoard.Clear();
 
 		var wallsDestroyingTop = GetOrderedRaws(p => p.WallsDestroyedInCurrentGame);
@@ -20,6 +19,8 @@ public class LeaderBoardSystem : IEcsRunSystem
 		{
 			levelData.LeaderBoard.AddRow(wallsDestroyingTop[i]);
 		}
+
+		levelData.LeaderBoard.gameObject.SetActive(wallsDestroyingTop.Count > 0);
 		
 		foreach (var i in filter)
 		{

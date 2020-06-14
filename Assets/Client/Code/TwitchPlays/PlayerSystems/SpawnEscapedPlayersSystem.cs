@@ -1,10 +1,8 @@
 ﻿using Leopotam.Ecs;
-using UnityEngine;
 
 public class SpawnEscapedPlayersSystem : IEcsRunSystem
 {
 	private readonly EcsFilter<SpawnSavedPlayersComponent> filter = default;
-	private readonly EcsFilter<MapComponent> maps = default;
 	private readonly RuntimeData runtimeData = default;
 	private readonly EcsWorld world = default;
 
