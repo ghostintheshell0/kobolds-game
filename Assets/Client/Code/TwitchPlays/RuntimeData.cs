@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuntimeData
+public class RuntimeData : IEcsSystem
 {
 	private List<PlayerStats> savedPlayersData = new List<PlayerStats>();
 	private List<EcsEntity> livePlayers = new List<EcsEntity>();
 	private List<PlayerStats> playersInLastGame = new List<PlayerStats>();
 	private List<PlayerStats> escapedPlayers = new List<PlayerStats>();
+	private readonly EcsFilter<MapComponent> maps = default;
 
 	public bool IsDoom = false;
 
@@ -110,6 +111,11 @@ public class RuntimeData
 	public void EscapePlayer(PlayerStats data)
 	{
 		escapedPlayers.Add(data);
+	}
+
+	public ref MapComponent GetMap(int index)
+	{
+		return ref maps.Get1(index);
 	}
 
 	public int PlayersCount => livePlayers.Count;

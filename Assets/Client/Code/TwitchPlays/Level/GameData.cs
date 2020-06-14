@@ -11,6 +11,7 @@ public class GameData : ScriptableObject
 	public float RoundDuration;
 	public float AfterFirstLeaverRoundDuration;
 	public string TimerFormat;
+	public string LocalDataPath;
 	public string SecretFileName;
 	public string PlayersSaveFile;
 	public bool IsDebug;

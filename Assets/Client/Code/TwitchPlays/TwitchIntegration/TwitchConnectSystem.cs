@@ -45,7 +45,8 @@ public class TwitchConnectSystem : IEcsRunSystem
 	private void OnJoinedChannel(object sender, OnJoinedChannelArgs e)
 	{
 		var ent = world.NewEntity();
-		ent.Set<HideTwitchConnectionUIComponent>();
+		ref var hideUI = ref ent.Set<ChangeTwitchConnectionUIComponent>();
+		hideUI.Visible = false;
 	}
 
 	private void OnMessageReceived(object sender, OnMessageReceivedArgs e)
@@ -73,8 +74,20 @@ public class TwitchConnectSystem : IEcsRunSystem
 
 	private void SaveSecret(TwitchSecretComponent secret)
 	{
-		var path = Path.Combine(Application.dataPath, gameData.SecretFileName);
-		var content = new string[] { secret.Oauth, secret.UserName, secret.Channel };
-		File.WriteAllLines(path, content);
+		var dataFolderPath = Path.Combine(Application.dataPath, gameData.LocalDataPath);
+		var saveFilePath = Path.Combine(dataFolderPath, gameData.SecretFileName);
+
+		if(!Directory.Exists(dataFolderPath))
+		{
+			Directory.CreateDirectory(dataFolderPath);
+		}
+
+		using (var fs = File.CreateText(saveFilePath))
+		{
+			fs.WriteLineAsync(secret.Oauth);
+			fs.WriteLineAsync(secret.UserName);
+			fs.WriteLineAsync(secret.Channel);
+		}
+
 	}
 }

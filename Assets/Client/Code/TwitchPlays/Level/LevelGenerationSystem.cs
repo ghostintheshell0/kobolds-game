@@ -155,6 +155,9 @@ public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 
 	private void GenerateSpawners(ref MapComponent map, GenerationSettings settings)
 	{
+		map.Spawners = new List<EcsEntity>();
+		map.FreeSpawners = new List<EcsEntity>();
+
 		var p1 = new Vector2Int(0, 0);
 		var p2 = new Vector2Int(0, map.Size.y);
 
@@ -190,6 +193,7 @@ public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 			ref var spawner = ref e.Set<SpawnerComponent>();
 			spawner.MapPosition = from + step * i;
 			spawner.MapEnt = map.Entity;
+			map.Spawners.Add(e);
 		}
 	}
 

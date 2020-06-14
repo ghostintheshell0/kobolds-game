@@ -9,7 +9,7 @@ public class LoadTwitchInfoSystem : IEcsInitSystem
 
 	public void Init()
 	{
-		var path = Path.Combine(Application.dataPath, gameData.SecretFileName);
+		var path = Path.Combine(Application.dataPath, gameData.LocalDataPath, gameData.SecretFileName);
 		if(!File.Exists(path)) return;
 
 		var secrets = File.ReadAllLines(path);
@@ -22,6 +22,6 @@ public class LoadTwitchInfoSystem : IEcsInitSystem
  		secret.Channel = secrets[2];
 
 		var hideConnectHudEnt = world.NewEntity();
-		ref var hideConnectHud = ref hideConnectHudEnt.Set<HideTwitchConnectionUIComponent>();
+		ref var hideConnectHud = ref hideConnectHudEnt.Set<ChangeTwitchConnectionUIComponent>();
 	}
 }

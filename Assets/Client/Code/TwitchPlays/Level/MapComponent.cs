@@ -11,4 +11,6 @@ public struct MapComponent
 	public Vector3 Position;
 	public EcsEntity Entity;
 	public List<EcsEntity> Objects;
+	public List<EcsEntity> Spawners;
+	public List<EcsEntity> FreeSpawners;
 }

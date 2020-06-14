@@ -1,8 +1,10 @@
 ﻿using Leopotam.Ecs;
+using UnityEngine;
 
 public class SpawnEscapedPlayersSystem : IEcsRunSystem
 {
 	private readonly EcsFilter<SpawnSavedPlayersComponent> filter = default;
+	private readonly EcsFilter<MapComponent> maps = default;
 	private readonly RuntimeData runtimeData = default;
 	private readonly EcsWorld world = default;
 
@@ -14,8 +16,8 @@ public class SpawnEscapedPlayersSystem : IEcsRunSystem
 			{
 				var e = world.NewEntity();
 				ref var spawn = ref e.Set<PlayerSpawnComponent>();
-
 				spawn.Stats = runtimeData.EscapedPlayers[k];
+				spawn.MapIndex = 0;
 			}
 
 			runtimeData.ClearEscapedPlayers();

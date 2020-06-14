@@ -35,6 +35,7 @@ public class GameStarter : MonoBehaviour
 			.Add(new CommandsSystems())
 			.Add(new LevelSystems())
 			.Add(new PlayerSystems())
+			.Add(runtimeData)
 
 			.Inject(gameData)
 			.Inject(levelData)

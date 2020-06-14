@@ -14,11 +14,21 @@ public class SavePlayersSystem : IEcsRunSystem
 	{
 		if (Input.GetKeyDown(levelData.SaveGameButton))
 		{
-			var path = Path.Combine(Application.dataPath, gameData.PlayersSaveFile);
-			var data = runtimeData.SavedPlayers;
-			var json = JsonConvert.SerializeObject(data);
-			File.WriteAllText(path, json);
+			Save();
 		}
+	}
+
+	private void Save()
+	{
+		var directoryPath = Path.Combine(Application.dataPath, gameData.LocalDataPath);
+		if (!Directory.Exists(directoryPath))
+		{
+			Directory.CreateDirectory(directoryPath);
+		}
+		var path = Path.Combine(directoryPath, gameData.PlayersSaveFile);
+		var data = runtimeData.SavedPlayers;
+		var json = JsonConvert.SerializeObject(data);
+		File.WriteAllText(path, json);
 	}
 }
 
@@ -29,7 +39,7 @@ public class LoadPlayersSystem : IEcsInitSystem
 
 	public void Init()
 	{
-		var path = Path.Combine(Application.dataPath, gameData.PlayersSaveFile);
+		var path = Path.Combine(Application.dataPath, gameData.LocalDataPath, gameData.PlayersSaveFile);
 		if(!File.Exists(path))
 		{
 			Debug.Log($"File {path} not exist");

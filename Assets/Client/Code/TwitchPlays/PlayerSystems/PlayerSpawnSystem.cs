@@ -5,7 +5,6 @@ using Random = UnityEngine.Random;
 public class PlayerSpawnSystem : IEcsRunSystem
 {
 	private readonly EcsFilter<PlayerSpawnComponent> filter = default;
-	private readonly EcsFilter<SpawnerComponent> spawners = default;
 	private readonly RuntimeData runtimeData = default;
 	private readonly LevelData levelData = default;
 	private readonly GameData gameData = default;
@@ -15,12 +14,13 @@ public class PlayerSpawnSystem : IEcsRunSystem
 	{
 		foreach(var i in filter)
 		{
-			var count = spawners.GetEntitiesCount();
-			if (count > 0)
+			ref var spawnData = ref filter.Get1(i);
+			ref var map = ref runtimeData.GetMap(spawnData.MapIndex);
+
+			if (map.Spawners.Count > 0)
 			{
-				ref var spawnComponent = ref filter.Get1(i);
-				ref var spawner = ref GetSpawner();
-				var playerEnt = SpawnPlayer(spawnComponent, spawner);
+				var spawner = GetSpawner(ref map);
+				var playerEnt = SpawnPlayer(spawnData, spawner);
 				ref var player = ref playerEnt.Set<PlayerComponent>();
 				ClearSpawner(spawner);
 				runtimeData.AddPlayer(playerEnt);
@@ -39,11 +39,21 @@ public class PlayerSpawnSystem : IEcsRunSystem
 		}
 	}
 
-	private ref SpawnerComponent GetSpawner()
+	private SpawnerComponent GetSpawner(ref MapComponent map)
 	{
-		var count = spawners.GetEntitiesCount();
-		ref var spawner = ref spawners.Get1(Random.Range(0, count));
-		return ref spawner;
+		if(map.FreeSpawners.Count == 0)
+		{
+			map.FreeSpawners.AddRange(map.Spawners);
+		}
+
+		var count = map.FreeSpawners.Count;
+		var index = Random.Range(0, count);
+
+		var spawnerEnt = map.FreeSpawners[index];
+		map.FreeSpawners.RemoveAt(index);
+		ref var spawner = ref spawnerEnt.Set<SpawnerComponent>();
+
+		return spawner;
 	}
 
 	private EcsEntity SpawnPlayer(PlayerSpawnComponent spawnData, in SpawnerComponent spawner)
