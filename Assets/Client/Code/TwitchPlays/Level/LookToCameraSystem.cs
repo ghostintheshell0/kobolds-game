@@ -3,7 +3,6 @@
 public class LookToCameraSystem :  IEcsRunSystem
 {
 	private readonly EcsFilter<LookToObjectComponent> filter = default;
-	private readonly LevelData levelData = default;
 
 	public void Run()
 	{

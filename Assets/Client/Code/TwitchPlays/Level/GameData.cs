@@ -10,7 +10,6 @@ public class GameData : ScriptableObject
 	public HatsList Hats;
 	public float RoundDuration;
 	public float AfterFirstLeaverRoundDuration;
-	public string TimerFormat;
 	public string LocalDataPath;
 	public string SecretFileName;
 	public string PlayersSaveFile;

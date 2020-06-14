@@ -9,7 +9,6 @@ public class LevelData : MonoBehaviour
 	public DebugInput DebugInput;
 	public DebugOutput DebugOutput;
 	public MonoPlayer PlayerTemplate;
-	public TMP_Text LevelTimer;
 	public MonoPlayerHUD PlayerHUDTemplate;
 	public LeaderBoard LeaderBoard;
 	public TwitchConnectionUI TwitchConnectionUI;

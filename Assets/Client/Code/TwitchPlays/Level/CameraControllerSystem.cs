@@ -46,7 +46,6 @@ public class CameraControllerSystem : IEcsRunSystem, IEcsInitSystem
 			var deltaY = mouseDelta.x * levelData.CameraSettings.RotationSpeed;
 
 			rotation.Delta = new Vector3(deltaX, deltaY);
-
 			
 		}
 
