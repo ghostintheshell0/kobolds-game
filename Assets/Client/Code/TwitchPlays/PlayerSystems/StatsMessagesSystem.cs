@@ -24,7 +24,7 @@ public class StatsMessagesSystem : IEcsRunSystem
 			if (runtimeData.IsSavedPlayer(mess.Sender))
 			{
 				stats = runtimeData.GetSavedPlayer(mess.Sender);
-				err.Message = $"@{mess.Sender} Level: {stats.Level}; Ore {stats.CurrentOre}/{stats.Level * gameData.PlayersData.LevelCostMultipler}; Total mined {stats.TotalOre} ore; {stats.Hats.Count} hats; Escaped {stats.Escapes} times";
+				err.Message = $"@{mess.Sender} Level: {stats.Level}; Ore {stats.CurrentOre}/{stats.Level * gameData.PlayersData.LevelCostMultipler}; Total mined {stats.TotalOre} ores; {stats.Hats.Count} hats; Escaped {stats.Escapes} times";
 			}
 			else
 			{

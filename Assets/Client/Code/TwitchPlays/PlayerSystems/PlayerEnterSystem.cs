@@ -32,7 +32,12 @@ public class PlayerEnterSystem : IEcsRunSystem
 			ref var spawn = ref ent.Set<PlayerSpawnComponent>();
 
 			var stats = runtimeData.IsSavedPlayer(mess.Sender) ? runtimeData.GetSavedPlayer(mess.Sender) : GetNewPlayerStats(mess.Sender);
+			stats.Level = 1;
+			stats.CurrentOre = 0;
+			stats.WallsDestroyedInCurrentGame = 0;
+
 			spawn.Stats = stats;
+
 
 		}
 	}
