@@ -22,8 +22,8 @@ public class LevelTimerSystem : IEcsRunSystem
 				timer.Time = 0f;
 				continue;
 			}
-			var time = TimeSpan.FromSeconds(timer.Time);
-			timer.View.text = time.ToString(timer.Format);
+
+			timer.View.ShowTime(timer.Time);
 		}
 	}
 }

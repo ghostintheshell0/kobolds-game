@@ -31,11 +31,9 @@ public class StartGameSystem : IEcsRunSystem
 
 	private void CreateTimer()
 	{
-
 		var e = world.NewEntity();
 		ref var timer = ref e.Set<LevelTimerComponent>();
-		timer.View = levelData.LevelTimer;
-		timer.Format = gameData.TimerFormat;
+		timer.View = levelData.GameUI.LevelTimer;
 		timer.Time = gameData.RoundDuration;
 	}
 
