@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d38fa8accdd351646b919f8c5af54432, type: 3}
-  m_Name: English
+  m_Name: Eng
   m_EditorClassIdentifier: 
   TwitchUserPrefix: '@'
   LevelCompleted: Level completed.
