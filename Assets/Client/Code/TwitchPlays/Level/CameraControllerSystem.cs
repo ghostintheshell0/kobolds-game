@@ -13,13 +13,26 @@ public class CameraControllerSystem : IEcsRunSystem, IEcsInitSystem
 		var mainCameraEnt = world.NewEntity();
 		ref var movableMainCamera = ref mainCameraEnt.Set<MovebleComponent>();
 		movableMainCamera.Transform = levelData.CameraObject;
+		movableMainCamera.Speed = levelData.CameraSettings.MovingSpeed;
 
 		ref var rotableMainCamera = ref mainCameraEnt.Set<RotableComponent>();
 		rotableMainCamera.Transform = levelData.CameraObject;
+		rotableMainCamera.Speed = levelData.CameraSettings.RotationSpeed;
+		rotableMainCamera.MinAngle = levelData.CameraSettings.MinAngle;
+		rotableMainCamera.MaxAngle = levelData.CameraSettings.MaxAngle;
+
+		ref var zoomableCamera = ref mainCameraEnt.Set<ZoomableCameraComponent>();
+		zoomableCamera.Camera = levelData.Camera;
+		zoomableCamera.Speed = levelData.CameraSettings.ZoomSpeed;
+		zoomableCamera.MinZoom = levelData.CameraSettings.MinZoom;
+		zoomableCamera.MaxZoom = levelData.CameraSettings.MaxZoom;
 
 		var arrowsCameraEnt = world.NewEntity();
 		ref var rotableArrowsCamera = ref arrowsCameraEnt.Set<RotableComponent>();
 		rotableArrowsCamera.Transform = levelData.GameUI.DirectionArrowsCameraObject.transform;
+		rotableArrowsCamera.Speed = levelData.CameraSettings.RotationSpeed;
+		rotableArrowsCamera.MinAngle = levelData.CameraSettings.MinAngle;
+		rotableArrowsCamera.MaxAngle = levelData.CameraSettings.MaxAngle;
 	}
 
 	public void Run()
@@ -29,12 +42,13 @@ public class CameraControllerSystem : IEcsRunSystem, IEcsInitSystem
 
 			if (levelData.EventsSystem.currentSelectedGameObject != null) return;
 
-			var deltaZoom = Input.GetAxis("Mouse ScrollWheel") * levelData.CameraSettings.ZoomSpeed;
+			var deltaZoom = Input.GetAxis("Mouse ScrollWheel");
 
 			if (deltaZoom != 0f)
 			{
-				var zoom = levelData.Camera.orthographicSize;
-				levelData.Camera.orthographicSize = Mathf.Clamp(zoom + deltaZoom, levelData.CameraSettings.MinZoom, levelData.CameraSettings.MaxZoom);
+				var e = world.NewEntity();
+				ref var zoom = ref e.Set<ZoomComponent>();
+				zoom.Delta = deltaZoom;
 			}
 
 			if (Input.GetMouseButton(1))
@@ -43,11 +57,7 @@ public class CameraControllerSystem : IEcsRunSystem, IEcsInitSystem
 
 				var e = world.NewEntity();
 				ref var rotation = ref e.Set<RotationComponent>();
-
-				var deltaX = mouseDelta.y * levelData.CameraSettings.RotationSpeed;
-				var deltaY = mouseDelta.x * levelData.CameraSettings.RotationSpeed;
-
-				rotation.Delta = new Vector3(deltaX, deltaY);
+				rotation.Delta = new Vector3(mouseDelta.x, mouseDelta.y);
 
 			}
 
@@ -58,7 +68,7 @@ public class CameraControllerSystem : IEcsRunSystem, IEcsInitSystem
 			{
 				var e = world.NewEntity();
 				ref var move = ref e.Set<MoveComponent>();
-				move.Delta = new Vector3(xSpeed, ySpeed, 0f) * (levelData.CameraSettings.MovingSpeed * Time.deltaTime);
+				move.Delta = new Vector3(xSpeed, ySpeed, 0f);
 			}
 		}
 		previousMousePos = Input.mousePosition;
@@ -69,7 +79,6 @@ public class ObjectsRotationSystem : IEcsRunSystem
 {
 	private readonly EcsFilter<RotableComponent> objects = default;
 	private readonly EcsFilter<RotationComponent> filter = default;
-	private readonly LevelData levelData = default;
 
 	public void Run()
 	{
@@ -82,9 +91,11 @@ public class ObjectsRotationSystem : IEcsRunSystem
 				ref var target = ref objects.Get1(o);
 
 				var oldAngles = target.Transform.rotation.eulerAngles;
-				var newX = Mathf.Clamp(oldAngles.x + rotation.Delta.x, levelData.CameraSettings.MinXAngle, levelData.CameraSettings.MaxXAngle);
+				var deltaX = rotation.Delta.y * target.Speed * Time.deltaTime;
+				var deltaY = rotation.Delta.x * target.Speed * Time.deltaTime;
+				var newX = Mathf.Clamp(oldAngles.x + deltaX, target.MinAngle.x, target.MaxAngle.x);
 
-				target.Transform.rotation = Quaternion.Euler(newX, oldAngles.y + rotation.Delta.y, oldAngles.z);
+				target.Transform.rotation = Quaternion.Euler(newX, oldAngles.y + deltaY, oldAngles.z);
 
 			}
 			
@@ -98,18 +109,18 @@ public class ObjectMovingSystem : IEcsRunSystem
 
 	private readonly EcsFilter<MovebleComponent> objects = default;
 	private readonly EcsFilter<MoveComponent> filter = default;
-	private readonly LevelData levelData = default;
 
 	public void Run()
 	{
 		foreach (var i in filter)
 		{
+			ref var move = ref filter.Get1(i);
+
 			foreach (var o in objects)
 			{
 				ref var target = ref objects.Get1(o);
 
-				ref var move = ref filter.Get1(i);
-				levelData.CameraObject.Translate(move.Delta);
+				target.Transform.Translate(move.Delta * (Time.deltaTime * target.Speed));
 			}
 			filter.GetEntity(i).Destroy();
 		}
@@ -117,9 +128,37 @@ public class ObjectMovingSystem : IEcsRunSystem
 }
 
 
+public class CameraZoomSystem : IEcsRunSystem
+{
+	private readonly EcsFilter<ZoomableCameraComponent> objects = default;
+	private readonly EcsFilter<ZoomComponent> filter = default;
+
+	public void Run()
+	{
+		foreach (var i in filter)
+		{
+			ref var zoom = ref filter.Get1(i);
+
+			foreach (var o in objects)
+			{
+				ref var target = ref objects.Get1(o);
+
+				var delta = zoom.Delta * Time.deltaTime * target.Speed;
+				target.Camera.orthographicSize = Mathf.Clamp(target.Camera.orthographicSize + delta, target.MinZoom, target.MaxZoom);
+			}
+
+			filter.GetEntity(i).Destroy();
+		}
+	}
+}
+
 public struct RotableComponent
 {
 	public Transform Transform;
+	public float Speed;
+	public Vector3 MinAngle;
+	public Vector3 MaxAngle;
+
 }
 
 public struct RotationComponent
@@ -130,9 +169,23 @@ public struct RotationComponent
 public struct MovebleComponent
 {
 	public Transform Transform;
+	public float Speed;
 }
 
 public struct MoveComponent
 {
 	public Vector3 Delta;
+}
+
+public struct ZoomableCameraComponent
+{
+	public Camera Camera;
+	public float Speed;
+	public float MinZoom;
+	public float MaxZoom;
+}
+
+public struct ZoomComponent
+{
+	public float Delta;
 }

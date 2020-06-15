@@ -212,6 +212,7 @@ public class LevelSystems : IEcsRunSystem, IEcsInitSystem
 			.Add(new DirectionArrowsSystem())
 			.Add(new ObjectsRotationSystem())
 			.Add(new ObjectMovingSystem())
+			.Add(new CameraZoomSystem())
 
 			.Inject(gameData)
 			.Inject(levelData)

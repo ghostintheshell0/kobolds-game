@@ -1047,13 +1047,11 @@ MonoBehaviour:
   CameraSettings:
     MinZoom: 1
     MaxZoom: 10
-    ZoomSpeed: -2
-    RotationSpeed: 0.8
-    MinXAngle: 20
-    MaxXAngle: 80
-    MinYAngle: 0
-    MaxYAngle: 360
-    MovingSpeed: 4
+    ZoomSpeed: -150
+    RotationSpeed: 45
+    MinAngle: {x: 20, y: 0, z: 0}
+    MaxAngle: {x: 80, y: 360, z: 0}
+    MovingSpeed: 11
   EventsSystem: {fileID: 1685931634}
   DebugInputButton: 9
   SaveGameButton: 286
