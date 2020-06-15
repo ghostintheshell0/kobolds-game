@@ -24,41 +24,43 @@ public class CameraControllerSystem : IEcsRunSystem, IEcsInitSystem
 
 	public void Run()
 	{
-		if (levelData.EventsSystem.IsPointerOverGameObject()) return;
-		if (levelData.EventsSystem.currentSelectedGameObject != null) return;
-
-		var deltaZoom = Input.GetAxis("Mouse ScrollWheel") * levelData.CameraSettings.ZoomSpeed;
-
-		if(deltaZoom != 0f)
+		if (!levelData.EventsSystem.IsPointerOverGameObject())
 		{
-			var zoom = levelData.Camera.orthographicSize;
-			levelData.Camera.orthographicSize = Mathf.Clamp(zoom + deltaZoom, levelData.CameraSettings.MinZoom, levelData.CameraSettings.MaxZoom);
+
+			if (levelData.EventsSystem.currentSelectedGameObject != null) return;
+
+			var deltaZoom = Input.GetAxis("Mouse ScrollWheel") * levelData.CameraSettings.ZoomSpeed;
+
+			if (deltaZoom != 0f)
+			{
+				var zoom = levelData.Camera.orthographicSize;
+				levelData.Camera.orthographicSize = Mathf.Clamp(zoom + deltaZoom, levelData.CameraSettings.MinZoom, levelData.CameraSettings.MaxZoom);
+			}
+
+			if (Input.GetMouseButton(1))
+			{
+				var mouseDelta = previousMousePos - Input.mousePosition;
+
+				var e = world.NewEntity();
+				ref var rotation = ref e.Set<RotationComponent>();
+
+				var deltaX = mouseDelta.y * levelData.CameraSettings.RotationSpeed;
+				var deltaY = mouseDelta.x * levelData.CameraSettings.RotationSpeed;
+
+				rotation.Delta = new Vector3(deltaX, deltaY);
+
+			}
+
+			var xSpeed = Input.GetAxis("Horizontal");
+			var ySpeed = Input.GetAxis("Vertical");
+
+			if (xSpeed != 0f || ySpeed != 0f)
+			{
+				var e = world.NewEntity();
+				ref var move = ref e.Set<MoveComponent>();
+				move.Delta = new Vector3(xSpeed, ySpeed, 0f) * (levelData.CameraSettings.MovingSpeed * Time.deltaTime);
+			}
 		}
-
-		if(Input.GetMouseButton(1))
-		{
-			var mouseDelta = previousMousePos - Input.mousePosition;
-
-			var e = world.NewEntity();
-			ref var rotation = ref e.Set<RotationComponent>();
-
-			var deltaX = mouseDelta.y * levelData.CameraSettings.RotationSpeed;
-			var deltaY = mouseDelta.x * levelData.CameraSettings.RotationSpeed;
-
-			rotation.Delta = new Vector3(deltaX, deltaY);
-			
-		}
-
-		var xSpeed = Input.GetAxis("Horizontal");
-		var ySpeed = Input.GetAxis("Vertical");
-
-		if(xSpeed != 0f || ySpeed != 0f)
-		{
-			var e = world.NewEntity();
-			ref var move = ref e.Set<MoveComponent>();
-			move.Delta = new Vector3(xSpeed, ySpeed, 0f) * (levelData.CameraSettings.MovingSpeed * Time.deltaTime);
-		}
-
 		previousMousePos = Input.mousePosition;
 	}
 }
