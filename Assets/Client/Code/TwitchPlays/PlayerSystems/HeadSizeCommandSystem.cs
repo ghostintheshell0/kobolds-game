@@ -4,6 +4,7 @@ public class HeadSizeCommandSystem : IEcsRunSystem
 {
 	private readonly EcsFilter<MessageComponent> filter = default;
 	private readonly TwitchCommands commands = default;
+	private readonly GameData gameData = default;
 	private readonly EcsWorld world = default;
 	private readonly RuntimeData runtimeData = default;
 
@@ -27,16 +28,16 @@ public class HeadSizeCommandSystem : IEcsRunSystem
 				}
 				else
 				{
-					SendError($"@{mess.Sender} syntax error. Example: {commands.HeadSize[0]} 1,5");
+					SendError($"{gameData.Localizations.TwitchUserPrefix}{mess.Sender} {gameData.Localizations.SyntaxError} {gameData.Localizations.Example} {commands.HeadSize[0]} 1,5");
 				}
 			}
 			else if (runtimeData.IsEscapedPlayer(mess.Sender))
 			{
-				SendError($"@{mess.Sender} , your character already leave from level.");
+				SendError($"{gameData.Localizations.TwitchUserPrefix}{mess.Sender} , {gameData.Localizations.AlreadyEscaped}");
 			}
 			else
 			{
-				SendError($"@{mess.Sender} , your character not spawned. Type {commands.Enter[0]}");
+				SendError($"{gameData.Localizations.TwitchUserPrefix}{mess.Sender} , {gameData.Localizations.NotSpawned} {gameData.Localizations.SpawnHelp}");
 			}
 
 			filter.GetEntity(i).Destroy();

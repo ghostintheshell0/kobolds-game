@@ -18,13 +18,13 @@ public class PlayerEnterSystem : IEcsRunSystem
 			
 			if (runtimeData.IsEscapedPlayer(mess.Sender))
 			{
-				SendMessage($"@{mess.Sender} already escaped from this level");
+				SendMessage($"{gameData.Localizations.TwitchUserPrefix}{mess.Sender} {gameData.Localizations.AlreadyEscaped}");
 				continue;
 			}
 
 			if (runtimeData.ContainsPlayer(mess.Sender))
 			{
-				SendMessage($"@{mess.Sender} already spawned");
+				SendMessage($"{gameData.Localizations.TwitchUserPrefix}{mess.Sender} {gameData.Localizations.AlreadySpawned}");
 				continue;
 			}
 			
@@ -61,7 +61,10 @@ public class PlayerEnterSystem : IEcsRunSystem
 	//			SkinColor = gameData.PlayersData.StartPlayerValues.SkinColor,
 				Deads = 0,
 				WallsDestroyed = 0,
-				WallsDestroyedInCurrentGame = 0
+				WallsDestroyedInCurrentGame = 0,
+				CurrentHatIndex = 0,
+				TotalOre = 0,
+				Hats = new System.Collections.Generic.List<int>(),
 			};
 	}
 }

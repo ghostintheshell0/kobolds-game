@@ -8,6 +8,7 @@ public class GameData : ScriptableObject
 	public PlayersData PlayersData;
 	public GenerationSettings GenerationSettings;
 	public HatsList Hats;
+	public LocalizationStrings Localizations;
 	public float RoundDuration;
 	public float AfterFirstLeaverRoundDuration;
 	public string LocalDataPath;

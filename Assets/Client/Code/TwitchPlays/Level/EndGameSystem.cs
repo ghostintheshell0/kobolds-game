@@ -1,16 +1,14 @@
 ﻿using Leopotam.Ecs;
-using System.Text;
+using TwitchPlays.Utils;
 
 public class EndGameSystem : IEcsRunSystem
 {
 	private readonly EcsFilter<EndGameComponent> filter = default;
 	private readonly RuntimeData runtimeData = default;
 	private readonly EcsWorld world = default;
+	private readonly GameData gameData = default;
 
 	private string namesSeparator = " , ";
-	private string namePrefix = "@";
-
-	private StringBuilder stringBuilder = new StringBuilder();
 
 	public void Run()
 	{
@@ -28,19 +26,16 @@ public class EndGameSystem : IEcsRunSystem
 		var saveGameEnt = world.NewEntity();
 		saveGameEnt.Set<SavePlayersComponent>();
 
-		stringBuilder.Clear();
+		var stringBuilder = StringBuilder.Get();
 
-		if (runtimeData.EscapedPlayers.Count == 0)
+		stringBuilder.Append(gameData.Localizations.LevelCompleted);
+		if (runtimeData.EscapedPlayers.Count > 0)
 		{
-			stringBuilder.Append($"Level completed.");
-		}
-		else
-		{
-			stringBuilder.Append($"Level completed. Saved players: ");
+			stringBuilder.Append(gameData.Localizations.SavedPlayers);
 
 			for (int i = 0; i < runtimeData.EscapedPlayers.Count; ++i)
 			{
-				stringBuilder.Append(namePrefix);
+				stringBuilder.Append(gameData.Localizations.TwitchUserPrefix);
 				stringBuilder.Append(runtimeData.EscapedPlayers[i].Name);
 				stringBuilder.Append(namesSeparator);
 			}

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d38fa8accdd351646b919f8c5af54432, type: 3}
+  m_Name: English
+  m_EditorClassIdentifier: 
+  TwitchUserPrefix: '@'
+  LevelCompleted: Level completed.
+  AlreadyEscaped: already escaped from this level.
+  AlreadySpawned: already spawned.
+  SavedPlayers: 'Saved players:'
+  GameOverWarning: The world will be destroyed in
+  Seconds: seconds
+  NotSpawned: your character not spawned.
+  SyntaxError: syntax error.
+  SpawnHelp: Type !enter
+  Example: 'Example:'
+  HelpMessage: type !e for spawn. Type !u, !r, !d or !l for moving or mining. When
+    any player found exit come to ladder and type !exit for leave from the map. When
+    time left all players will die.
+  Level: Level
+  Ores: ores
+  Mined: mined
+  Hats: hats
+  Escapes: escapes
+  NextLevelCost: For next level need
+  LevelUp: level

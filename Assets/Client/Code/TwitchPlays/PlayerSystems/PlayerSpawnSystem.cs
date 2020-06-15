@@ -17,7 +17,7 @@ public class PlayerSpawnSystem : IEcsRunSystem
 			ref var spawnData = ref filter.Get1(i);
 			ref var map = ref runtimeData.GetMap(spawnData.MapIndex);
 
-			if (map.Spawners.Count > 0)
+			if (map.Spawners != null && map.Spawners.Count > 0)
 			{
 				var spawner = GetSpawner(ref map);
 				var playerEnt = SpawnPlayer(spawnData, spawner);
@@ -32,7 +32,7 @@ public class PlayerSpawnSystem : IEcsRunSystem
 			}
 			else
 			{
-				Debug.Log("No have spawn points");
+				Debug.LogWarning("No have spawn points");
 			}
 
 			filter.GetEntity(i).Destroy();

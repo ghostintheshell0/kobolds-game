@@ -4,6 +4,7 @@ public class HelpMessagesSystem : IEcsRunSystem
 {
 	private readonly EcsFilter<MessageComponent> filter = default;
 	private readonly TwitchCommands commands = default;
+	private readonly GameData gameData = default;
 	private readonly EcsWorld world = default;
 
 	public void Run()
@@ -16,9 +17,7 @@ public class HelpMessagesSystem : IEcsRunSystem
 			
 			var ent = world.NewEntity();
 			ref var err = ref ent.Set<ErrorComponent>();
-			err.Message = $"@{mess.Sender} type !e for spawn. Type !u, !r, !d or !l for moving or mining. " +
-				$"When any player found exit come to ladder and type !exit for leave from the map. When time left all players will die. " +
-			$" Type !color and !size for customize your kobold.";
+			err.Message = $"{gameData.Localizations.TwitchUserPrefix}{mess.Sender} {gameData.Localizations.HelpMessage}";
 			filter.GetEntity(i).Destroy();
 			
 		}

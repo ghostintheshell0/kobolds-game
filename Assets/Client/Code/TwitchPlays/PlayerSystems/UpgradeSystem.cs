@@ -42,16 +42,16 @@ public class UpgradeSystem : IEcsRunSystem
 					stats.Level++;
 					stats.CurrentOre -= cost;
 					var nextUpgradeCost = stats.Level * gameData.PlayersData.LevelCostMultipler;
-					err.Message = $"@{stats.Name} now {stats.Level} level. For next level need {stats.CurrentOre}/{nextUpgradeCost} ore.";
+					err.Message = $"{gameData.Localizations.TwitchUserPrefix}{stats.Name} {stats.Level} {gameData.Localizations.LevelUp}. {gameData.Localizations.NextLevelCost} {stats.CurrentOre}/{nextUpgradeCost} {gameData.Localizations.Ores}.";
 				}
 				else
 				{
-					err.Message = $"@{stats.Name} need more ore: {stats.CurrentOre}/{cost}.";
+					err.Message = $"{gameData.Localizations.TwitchUserPrefix}{stats.Name} {gameData.Localizations.NextLevelCost} {stats.CurrentOre}/{cost} {gameData.Localizations.Ores}.";
 				}
 			}
 			else
 			{
-				err.Message = $"@{mess.Sender} , your character not spawned. Type {commands.Enter[0]}";
+				err.Message = $"{gameData.Localizations.TwitchUserPrefix}{mess.Sender} , {gameData.Localizations.NotSpawned} {gameData.Localizations.SpawnHelp}";
 			}
 
 			filter.GetEntity(i).Destroy();

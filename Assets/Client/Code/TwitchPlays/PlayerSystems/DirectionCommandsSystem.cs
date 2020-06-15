@@ -7,6 +7,7 @@ public class DirectionCommandsSystem : IEcsRunSystem
 
 	private readonly EcsFilter<MessageComponent> filter = default;
 	private readonly RuntimeData runtimeData = default;
+	private readonly GameData gameData = default;
 	private readonly TwitchCommands commands = default;
 	private readonly EcsWorld world = default;
 
@@ -23,8 +24,7 @@ public class DirectionCommandsSystem : IEcsRunSystem
 					var dir = CommandToDirection(mess.FirstWord);
 
 					var playerEnt = runtimeData.GetPlayer(mess.Sender);
-					//		ref var target = ref playerEnt.Set<TargetComponent>();
-					//		target.Direction = dir;
+
 					playerEnt.Set<TasksCompletedComponent>();
 					ref var tasks = ref playerEnt.Set<PlayerTasksComponent>();
 					if(tasks.List == null)
@@ -46,7 +46,7 @@ public class DirectionCommandsSystem : IEcsRunSystem
 				{
 					var e = world.NewEntity();
 					ref var err = ref e.Set<ErrorComponent>();
-					err.Message = $"@{mess.Sender} already leave this level";
+					err.Message = $"@{mess.Sender} {gameData.Localizations.AlreadyEscaped}";
 				}
 
 			}

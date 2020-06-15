@@ -13,6 +13,6 @@ public class PlayerStats
 	public float HeadSize;
 	public int WallsDestroyed;
 	public int WallsDestroyedInCurrentGame;
-	public List<int> Hats = new List<int>();
+	public List<int> Hats;
 	public int CurrentHatIndex;
 }

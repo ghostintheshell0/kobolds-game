@@ -27,7 +27,7 @@ public class DoomSystem : IEcsRunSystem
 			var timerEnt = world.NewEntity();
 			ref var timerUpdater = ref timerEnt.Set<TimerUpdaterComponent>();
 			timerUpdater.NewTime = gameData.AfterFirstLeaverRoundDuration;
-			mess.Message = $"The world will be destroyed in {gameData.AfterFirstLeaverRoundDuration} seconds";
+			mess.Message = $"{gameData.Localizations.GameOverWarning} {gameData.AfterFirstLeaverRoundDuration} {gameData.Localizations.Seconds}";
 		}
 
 		foreach (var i in filter)

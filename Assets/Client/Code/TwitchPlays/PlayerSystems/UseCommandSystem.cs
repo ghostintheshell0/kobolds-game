@@ -6,6 +6,7 @@ public class UseCommandSystem : IEcsRunSystem
 	private readonly TwitchCommands commands = default;
 	private readonly EcsWorld world = default;
 	private readonly RuntimeData runtimeData = default;
+	private readonly GameData gameData = default;
 
 	public void Run()
 	{
@@ -23,11 +24,11 @@ public class UseCommandSystem : IEcsRunSystem
 			}
 			else if (runtimeData.IsEscapedPlayer(mess.Sender))
 			{
-				SendError($"@{mess.Sender} , your character already leave from level.");
+				SendError($"{gameData.Localizations.TwitchUserPrefix}{mess.Sender} , {gameData.Localizations.AlreadyEscaped}");
 			}
 			else
 			{
-				SendError($"@{mess.Sender} , your character not spawned. Type {commands.Enter[0]}");
+				SendError($"{gameData.Localizations.TwitchUserPrefix}{mess.Sender} , {gameData.Localizations.NotSpawned} {gameData.Localizations.SpawnHelp}");
 			}
 
 			filter.GetEntity(i).Destroy();
