@@ -38,6 +38,7 @@ public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 		map.Entity = mapEnt;
 
 		SetMapValues(ref map, settings);
+		GenerateFloor(ref map, settings);
 		GenerateWalls(ref map, settings.Walls);
 		GenerateObjects(ref map, settings);
 		GenerateSpawners(ref map, settings);
@@ -51,6 +52,36 @@ public class LevelGenerationSystem : IEcsRunSystem, IEcsInitSystem
 		map.Size = size;
 		map.CellSize = settings.CellSize;
 		map.Position = settings.StartPoint;
+	}
+
+	private void GenerateFloor(ref MapComponent map, GenerationSettings settings)
+	{
+		var floor = ObjectPool.Spawn(settings.FloorTemplate);
+		var mapSize = new Vector2(map.Size.x * map.CellSize.x, map.Size.y * map.CellSize.z);
+		floor.SetSize(mapSize);
+		floor.Surface.enabled = false;
+		var halfCellSize = map.CellSize * -0.5f;
+		var floorPos = new Vector3(mapSize.x * 0.5f, 0f, mapSize.y * 0.5f) + settings.startPoint + halfCellSize;
+		floor.transform.position = floorPos;
+
+		for (int ix = 0; ix < map.Size.x; ++ix)
+		{
+			for (int iy = 0; iy < map.Size.y; ++iy)
+			{
+				var e = world.NewEntity();
+				ref var wall = ref e.Set<WallComponent>();
+				var pos = new Vector2Int(ix, iy);
+				var tileTemplate = settings.FloorTemplate.Tiles.GetRandomItem();
+
+				var tile = ObjectPool.Spawn(tileTemplate.Transform);
+				tile.position = map.MapToWorld(new Vector2Int(ix, iy));
+				tile.SetParent(floor.transform);
+			}
+		}
+
+
+		floor.Surface.enabled = true;
+		floor.Surface.BuildNavMesh();
 	}
 
 	private void GenerateWalls(ref MapComponent map, RandomWallList walls)
