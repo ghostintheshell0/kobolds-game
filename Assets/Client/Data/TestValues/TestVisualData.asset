@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25205dc04626de34aad95cce92b05e6d, type: 3}
-  m_Name: VisualGenerationSettings
+  m_Script: {fileID: 11500000, guid: 350cfd496855d704fbb0a65702fa1d9c, type: 3}
+  m_Name: TestVisualData
   m_EditorClassIdentifier: 
-  StartPoint: {x: -4.5, y: 0, z: -5}
-  CellSize: {x: 1, y: 0, z: 1}
-  ExitTemplate: {fileID: -4283654180255311824, guid: 99dfce56ca6993e4a8518d8fa13713f6,
-    type: 3}
+  MinHeadSize: 0.5
+  MaxHeadSize: 2.5

@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43e6389266f3bb24ebe68de94c8ae126, type: 3}
   m_Name: MapSettings
   m_EditorClassIdentifier: 
-  walls: {fileID: 11400000, guid: 5a995637e4dbbf44783c41519ff161a3, type: 2}
-  mapObjects: {fileID: 11400000, guid: 0fc74c53e79c0e244a2b5f836896520b, type: 2}
-  mapSize: {x: 11, y: 11}
+  walls: {fileID: 11400000, guid: 597dc6ade48f43449832540591757f9d, type: 2}
+  mapObjects: {fileID: 11400000, guid: 573f6b7d94a603e47a7765f951305e37, type: 2}
+  floorTemplate: {fileID: 4803297922008107076, guid: f6304752b6c7145429a5d90c119dc4a6,
+    type: 3}
+  mapSize: {x: 20, y: 20}
   totalSpawners: 12
   exitBorderOffset: 1
   startPoint: {x: -4.5, y: 0, z: -5}

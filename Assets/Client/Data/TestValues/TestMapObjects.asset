@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945c559e8900b534bafbce0b87888b22, type: 3}
+  m_Name: TestMapObjects
+  m_EditorClassIdentifier: 
+  objects:
+  - Template: {fileID: 323462026170712558, guid: 99dfce56ca6993e4a8518d8fa13713f6,
+      type: 3}
+    Chance: 1
+    BordersOffset: 1
+    Count: 1
+    Visible: 0
+    CanBeUnderWall: 0
+    MapObjectType: 0
+  - Template: {fileID: 7456681521583013383, guid: c2eabb3c166393e47a80414fec298dce,
+      type: 3}
+    Chance: 0.5
+    BordersOffset: 1
+    Count: 5
+    Visible: 1
+    CanBeUnderWall: 0
+    MapObjectType: 1

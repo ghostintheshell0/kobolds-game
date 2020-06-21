@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d19432acec43ab4887b885196e43706, type: 3}
+  m_Name: TestPlayerDefaultValues
+  m_EditorClassIdentifier: 
+  StartPlayerValues:
+    Name: 
+    CurrentOre: 0
+    TotalOre: 0
+    Level: 1
+    Escapes: 0
+    Deads: 0
+    HeadSize: 1
+    WallsDestroyed: 0
+    WallsDestroyedInCurrentGame: 0
+    Hats: 
+    CurrentHatIndex: 0
+  MovingSpeed: 2
+  StoppingDistance: 0.2
+  PickaxeAnimationVariants: 3
+  DamageMultipler: 50
+  LevelCostMultipler: 4
+  EnableAgentFramesDelay: 60

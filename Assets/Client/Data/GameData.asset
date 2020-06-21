@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56d58586b66ede43a8d0137a0e1c45b, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  TwitchCommands: {fileID: 11400000, guid: 80b5d6319168f0146a62d327d8b2d644, type: 2}
-  VisualData: {fileID: 11400000, guid: 8bd10f1f4e57eb0428d9448977c2f1d7, type: 2}
+  TwitchCommands: {fileID: 11400000, guid: b462d384cadb75c4da7f2ca293a6524a, type: 2}
+  VisualData: {fileID: 11400000, guid: cc080a27d3acba14983652a71e5db0ef, type: 2}
   PlayersData: {fileID: 11400000, guid: c138885e225295847a359fa3ec8473ab, type: 2}
-  GenerationSettings: {fileID: 11400000, guid: d1c4b3323c9370149a4c42e558379a9d, type: 2}
-  Hats: {fileID: 11400000, guid: 651fcc8af98f86c499bbe14de904a636, type: 2}
+  GenerationSettings: {fileID: 11400000, guid: 552bde1d4b108b040be88f81bee1552a, type: 2}
+  Hats: {fileID: 11400000, guid: 20d9b862e4dd2cb4fa158aa55375e4c5, type: 2}
   Localizations: {fileID: 11400000, guid: 71da776c399bd9d45a2a63dda6b17edf, type: 2}
   RoundDuration: 420
-  AfterFirstLeaverRoundDuration: 90
-  LocalDataPath: LocalData
-  SecretFileName: secret
-  PlayersSaveFile: players
+  AfterFirstLeaverRoundDuration: 60
+  LocalDataPath: 
+  SecretFileName: LocalData/secret
+  PlayersSaveFile: LocalData/players
   IsDebug: 1

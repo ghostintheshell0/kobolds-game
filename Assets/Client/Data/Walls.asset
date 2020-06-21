@@ -13,15 +13,22 @@ MonoBehaviour:
   m_Name: Walls
   m_EditorClassIdentifier: 
   items:
-  - MinHp: 111
-    MaxHp: 111
+  - MinHp: 35
+    MaxHp: 40
     MinOre: 0
     MaxOre: 0
     Chance: 10
     Prefab: {fileID: -2777098766708976027, guid: b4bacec88a6811947bcc075c04b27986,
       type: 3}
-  - MinHp: 111
-    MaxHp: 111
+  - MinHp: 35
+    MaxHp: 40
+    MinOre: 0
+    MaxOre: 0
+    Chance: 10
+    Prefab: {fileID: -2777098766708976027, guid: 111978b58bb794e468b8e6db3d55478b,
+      type: 3}
+  - MinHp: 100
+    MaxHp: 120
     MinOre: 1
     MaxOre: 1
     Chance: 2

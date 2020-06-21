@@ -14,14 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartPlayerValues:
     Name: 
-    Ore: 0
+    CurrentOre: 0
+    TotalOre: 0
     Level: 1
     Escapes: 0
     Deads: 0
-    SkinColor: {r: 1, g: 1, b: 1, a: 1}
     HeadSize: 1
     WallsDestroyed: 0
     WallsDestroyedInCurrentGame: 0
+    Hats: 
+    CurrentHatIndex: 0
   MovingSpeed: 2
   StoppingDistance: 0.2
   PickaxeAnimationVariants: 3

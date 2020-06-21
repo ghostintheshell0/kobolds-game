@@ -23,9 +23,12 @@ MonoBehaviour:
   SyntaxError: syntax error.
   SpawnHelp: Type !enter
   Example: 'Example:'
-  HelpMessage: type !e for spawn. Type !u, !r, !d or !l for moving or mining. When
-    any player found exit come to ladder and type !exit for leave from the map. When
-    time left all players will die.
+  HelpMessage: 'type !e for spawn. Type !u, !r, !d or !l for moving or mining.
+
+    Or
+    you can use stack of commands like !u r r d. When any player found ladder come
+    to it and type !exit for leave the level. When time left all players will die.
+    If you will find any old box, tipe !use to open it.'
   Level: Level
   Ores: ores
   Mined: mined
